@@ -82,7 +82,7 @@
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
     <main data-screen-label="Home" style="animation: fadeUp 0.4s ease;">
       <div style="position: relative; height: 80vh; min-height: 500px; background: #1d2433; overflow: hidden;">
-        <img src="uploads/hero-proposal-central-park.jpg" alt="Pete kneeling to propose to Lisa beside the Conservatory Water in Central Park" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 24%;">
+        <img src="uploads/hero-proposal-central-park.jpg" alt="Pete kneeling to propose to Lisa beside the Conservatory Water in Central Park" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 50%;">
         <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(20,26,40,0.72) 0%, rgba(20,26,40,0.28) 42%, rgba(20,26,40,0.02) 70%);"></div>
         <div style="position: absolute; left: 0; right: 0; top: 0; padding: 44px 24px 0; text-align: center;">
           <div style="font-family: 'Archivo', sans-serif; font-size: 13px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(246,243,234,0.9); margin-bottom: 14px;">We're getting married</div>
@@ -226,6 +226,17 @@
         <h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">Saturday, November 7, 2026</h2>
       </div>
 
+      <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; overflow: hidden; margin-bottom: 40px;">
+        <sc-for list="{{ schedule }}" as="ev" hint-placeholder-count="5">
+          <div style="display: grid; grid-template-columns: minmax(130px, 160px) 1fr; gap: 16px; padding: 18px 24px; border-bottom: 1px solid rgba(29,36,51,0.08); align-items: baseline;">
+            <div style="font-weight: 600; color: #26493a; font-size: 15px;">{{ ev.time }}</div>
+            <div style="font-size: 15.5px; color: #1d2433;">{{ ev.what }} <span style="color: #7a8090;">{{ ev.where }}</span>
+              <sc-if value="{{ ev.address }}" hint-placeholder-val="{{ false }}"><div style="font-size: 13px; color: #7a8090; margin-top: 2px;">{{ ev.address }}</div></sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
       <div style="background: #26493a; border-radius: 6px; padding: 28px; margin-bottom: 40px;">
         <div style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #a8c6dd; margin-bottom: 14px;">Registry</div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
@@ -238,23 +249,17 @@
         </div>
       </div>
 
-      <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; overflow: hidden; margin-bottom: 48px;">
-        <sc-for list="{{ schedule }}" as="ev" hint-placeholder-count="5">
-          <div style="display: grid; grid-template-columns: minmax(130px, 160px) 1fr; gap: 16px; padding: 18px 24px; border-bottom: 1px solid rgba(29,36,51,0.08); align-items: baseline;">
-            <div style="font-weight: 600; color: #26493a; font-size: 15px;">{{ ev.time }}</div>
-            <div style="font-size: 15.5px; color: #1d2433;">{{ ev.what }} <span style="color: #7a8090;">{{ ev.where }}</span>
-              <sc-if value="{{ ev.address }}" hint-placeholder-val="{{ false }}"><div style="font-size: 13px; color: #7a8090; margin-top: 2px;">{{ ev.address }}</div></sc-if>
-            </div>
-          </div>
-        </sc-for>
-      </div>
-
       <h3 style="margin: 0 0 18px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 28px; color: #1d2433;">Good to know</h3>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
         <sc-for list="{{ detailNotes }}" as="note" hint-placeholder-count="6">
           <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 20px;">
             <div style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #26493a; font-weight: 600; margin-bottom: 8px;">{{ note.label }}</div>
-            <div style="font-size: 14px; line-height: 1.6; color: {{ note.color }}; font-family: {{ note.font }};">{{ note.value }}</div>
+            <sc-if value="{{ note.isEmail }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size: 14px; line-height: 1.6;"><a href="{{ note.mailto }}">{{ note.value }}</a></div>
+            </sc-if>
+            <sc-if value="{{ note.notEmail }}" hint-placeholder-val="{{ true }}">
+              <div style="font-size: 14px; line-height: 1.6; color: {{ note.color }}; font-family: {{ note.font }};">{{ note.value }}</div>
+            </sc-if>
           </div>
         </sc-for>
       </div>
@@ -331,8 +336,8 @@
     <main data-screen-label="RSVP" style="animation: fadeUp 0.4s ease; max-width: 640px; margin: 0 auto; padding: 64px 24px 96px; width: 100%; box-sizing: border-box; text-align: center;">
       <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 12px;">Join Us</div>
       <h2 style="margin: 0 0 16px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">RSVP</h2>
-      <p style="margin: 0 0 28px; font-size: 16px; line-height: 1.65; color: #454c5c;">We so hope you can make it. Kindly reply by <strong style="color: #1d2433;">{{ rsvpDeadline }}</strong>.</p>
-<a href="{{ rsvpLink }}" target="_blank" rel="noopener" style="display: inline-block; background: #b05f36; color: #f6f3ea; border-radius: 4px; padding: 16px 48px; font-family: 'Archivo', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;" style-hover="background: #9a4f2a; color: #f6f3ea;">RSVP</a>
+      <p style="margin: 0 0 28px; font-size: 16px; line-height: 1.65; color: #454c5c;">Kindly reply by <strong style="color: #1d2433;">{{ rsvpDeadline }}</strong>.</p>
+<a href="{{ rsvpLink }}" target="_blank" rel="noopener" style="display: inline-block; background: #b05f36; color: #f6f3ea; border-radius: 4px; padding: 16px 48px; font-family: 'Archivo', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;" style-hover="background: #9a4f2a; color: #f6f3ea;">RSVP Form</a>
       <div style="margin-top: 16px; font-size: 14px; color: #5a6070;">Or email us at <a href="mailto:sternfishmanwedding@gmail.com">sternfishmanwedding@gmail.com</a></div>
 
       <div style="margin-top: 48px; background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 28px; text-align: left;">
@@ -376,7 +381,7 @@ class Component extends DCLogic {
     { src: 'uploads/IMG_0929-f1f8c200.jpeg', alt: 'Lisa and Pete smiling closely together indoors', caption: 'Officially, happily, a crown of two.', section: 'story', objectPosition: 'center 30%', visible: true },
     { src: 'uploads/IMG_1273-a6eb4bb1.jpeg', alt: 'Pete and Lisa in ski gear at a snowy Montana resort', caption: 'Montana adventures with the Sterns.', section: 'story', objectPosition: 'center 30%', visible: true },
     { src: 'uploads/IMG_9250-3f199009.jpeg', alt: 'Lisa and Pete taking a selfie beneath the blue whale at the American Museum of Natural History', caption: 'Where invisible strings first pulled tight.', section: 'story', objectPosition: 'center 40%', visible: true },
-    { src: 'uploads/IMG_3900-82__darker_natural_color.jpg', alt: 'Lisa jumping into a hug with Pete by the Central Park lake, San Remo towers behind them', caption: 'Central Park, Knicks, Italy — a summer to remember.', section: 'story', objectPosition: 'center center', ratio: '3 / 4', fit: 'contain', visible: true },
+    { src: 'uploads/IMG_3900-82__darker_natural_color.jpg', alt: 'Lisa jumping into a hug with Pete by the Central Park lake, San Remo towers behind them', caption: 'Central Park, from the West Side to the East Side.', section: 'story', objectPosition: 'center center', ratio: '3 / 4', fit: 'contain', visible: true },
     { src: 'uploads/gallery-palm-hug.jpg', alt: 'Couple hugging on a balcony with palm trees and soft clouds behind them', caption: 'Sunshine, palm trees, and the easiest yes.', section: 'gallery', group: 'travel', objectPosition: 'center 30%', ratio: '3 / 4', visible: false },
     { src: 'uploads/IMG_8815-6bb25d0f.jpeg', alt: 'Couple smiling together on a pool deck surrounded by trees in the Hamptons', caption: 'Sag Harbor pool days.', section: 'gallery', group: 'travel', objectPosition: 'center 30%', ratio: '3 / 4', visible: true },
     { src: 'uploads/gallery-garden-path.jpg', alt: 'Couple standing together on a garden path lined with palm trees', caption: 'Garden walks and warm lights.', section: 'gallery', group: 'travel', objectPosition: 'center 30%', ratio: '3 / 4', visible: false },
@@ -416,7 +421,7 @@ class Component extends DCLogic {
     const toggleMobileNav = () => this.setState(s => ({ mobileNavOpen: !s.mobileNavOpen }));
     const tabs = [
       ['home', 'Home'], ['story', 'Our Story'], ['venue', 'Il Bacco'], ['details', 'Wedding Details'],
-      ['hotels', 'Hotels'], ['transport', 'Transportation'], ['rsvp', 'RSVP'], ['photos', 'Photos']
+      ['hotels', 'Hotels'], ['transport', 'Transportation'], ['rsvp', 'RSVP']
     ];
     const navItems = tabs.map(([id, label]) => ({
       label, go: set(id),
@@ -427,17 +432,17 @@ class Component extends DCLogic {
 
     const boat = this.find('IMG_8815');
     const crown = this.find('IMG_0929');
-    const montana = this.find('IMG_1273');
+    const montana = this.find('IMG_1273-a6eb4bb1');
     const whale = this.find('IMG_9250');
     const parkSpot = this.find('IMG_3900');
 
     const storyItems = [
-      { date: 'March 2025', title: 'Invisible Strings', body: "Lisa and Pete meet — and, unbeknownst to them, a number of invisible strings already tie their worlds together. Some things are simply meant to find each other.", img: whale.src, imgAlt: whale.alt, imgPos: whale.objectPosition, imgRatio: '3 / 2', imgFit: 'cover', imgCaption: whale.caption },
+      { date: 'March 2025', title: 'Invisible Strings', body: "Lisa and Pete meet at Rafael/Mirian, UES — and, unbeknownst to them, a number of invisible strings already tie their worlds together.", img: whale.src, imgAlt: whale.alt, imgPos: whale.objectPosition, imgRatio: '3 / 2', imgFit: 'cover', imgCaption: whale.caption },
       { date: 'May 2025', title: 'The Second Crown', body: 'Pete meets a second Crown, Lindsay, and things become official.', img: crown.src, imgAlt: crown.alt, imgPos: crown.objectPosition, imgRatio: '3 / 2', imgFit: 'cover', imgCaption: crown.caption },
       { date: 'Summer 2025', title: 'The Shore and the Hamptons', body: "Lisa visits the Shore and Pete visits the Hamptons. Love blooms over summer weekends, family time, and getting folded into each other's worlds.", img: boat.src, imgAlt: boat.alt, imgPos: boat.objectPosition, imgRatio: '3 / 2', imgFit: 'cover', imgCaption: boat.caption },
       { date: 'Winter 2025/2026', title: 'Families and Adventures', body: 'Lisa comes to Thanksgiving at Garfield Terrace. Pete goes to Mexico and Montana with the Sterns.', img: montana.src, imgAlt: montana.alt, imgPos: montana.objectPosition, imgRatio: '3 / 2', imgFit: 'cover', imgCaption: montana.caption },
       { date: 'June 2026', title: 'Paper Rings — a summer to remember', body: 'Pete proposes in Central Park. Soon after, the Knicks win the NBA Championship, and Lisa and Pete head to Italy.', img: parkSpot.src, imgAlt: parkSpot.alt, imgPos: parkSpot.objectPosition, imgRatio: parkSpot.ratio || '3 / 2', imgFit: parkSpot.fit || 'cover', imgCaption: parkSpot.caption },
-      { date: 'November 7, 2026', title: 'The Wedding - Speak Now or Forever Hold Your Peace', body: 'Il Bacco · 253-24 Northern Blvd, Little Neck, Queens, NY 11362' }
+      { date: 'November 7, 2026', title: 'The Wedding - Speak Now (or Forever Hold Your Peace)', body: 'Il Bacco · 253-24 Northern Blvd, Little Neck, Queens, NY 11362' }
     ];
 
     const homeKnicks = this.find('gallery-knicks');
@@ -467,9 +472,9 @@ class Component extends DCLogic {
       { label: 'Ceremony', value: this.tbd.ceremonyWording },
       { label: 'Weather & rooftop backup', value: this.tbd.weatherBackup },
       { label: 'Parking', value: this.tbd.parking },
-      { label: 'Wedding contact', value: this.tbd.contact },
+      { label: 'Wedding contact', value: this.tbd.contact, isEmail: true },
       { label: 'Good to bring / know', value: this.tbd.bring }
-    ].map(n => ({ label: n.label, value: friendly(n.value), ...noteStyle(n.value) }));
+    ].map(n => ({ label: n.label, value: friendly(n.value), isEmail: !!n.isEmail, notEmail: !n.isEmail, mailto: 'mailto:' + n.value, ...noteStyle(n.value) }));
 
     const copyAddress = () => {
       const addr = 'Il Bacco, 253-24 Northern Blvd, Little Neck, NY 11362';
