@@ -3,6 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lisa & Pete — November 7, 2026</title>
+<meta name="description" content="Join us as we celebrate our wedding on November 7, 2026 at Il Bacco in Little Neck, New York.">
+<meta property="og:title" content="Lisa & Pete — November 7, 2026">
+<meta property="og:description" content="Join us as we celebrate our wedding on November 7, 2026 at Il Bacco in Little Neck, New York.">
+<meta property="og:image" content="uploads/hero-proposal-central-park.jpg">
+<meta property="og:type" content="website">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -52,12 +58,24 @@
   <header style="position: sticky; top: 0; z-index: 50; background: rgba(246,243,234,0.94); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(29,36,51,0.12);">
     <div style="max-width: 1160px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
       <div style="font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; letter-spacing: 0.04em; color: #1d2433; cursor: pointer;" onClick="{{ goHome }}">L <span style="color: #b05f36; font-style: italic;">&amp;</span> P</div>
-      <nav style="display: flex; gap: 4px; overflow-x: auto; max-width: 100%; scrollbar-width: none;">
+      <nav style="display: {{ desktopNavDisplay }}; gap: 4px; overflow-x: auto; max-width: 100%; scrollbar-width: none;">
         <sc-for list="{{ navItems }}" as="tab" hint-placeholder-count="8">
           <button onClick="{{ tab.go }}" style="border: none; background: none; cursor: pointer; font-family: 'Archivo', sans-serif; font-size: 13.5px; font-weight: {{ tab.weight }}; letter-spacing: 0.02em; color: {{ tab.color }}; padding: 8px 10px; border-bottom: 2px solid {{ tab.underline }}; white-space: nowrap;" style-hover="color: #b05f36;">{{ tab.label }}</button>
         </sc-for>
       </nav>
+      <button onClick="{{ toggleMobileNav }}" aria-label="Menu" style="display: {{ hamburgerDisplay }}; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 8px;">
+        <span style="width: 24px; height: 2px; background: #1d2433; display: block;"></span>
+        <span style="width: 24px; height: 2px; background: #1d2433; display: block;"></span>
+        <span style="width: 24px; height: 2px; background: #1d2433; display: block;"></span>
+      </button>
     </div>
+    <sc-if value="{{ mobileNavOpen }}" hint-placeholder-val="{{ false }}">
+      <nav style="display: flex; flex-direction: column; border-top: 1px solid rgba(29,36,51,0.12); padding: 8px 24px 16px;">
+        <sc-for list="{{ navItems }}" as="tab" hint-placeholder-count="8">
+          <button onClick="{{ tab.go }}" style="border: none; background: none; cursor: pointer; text-align: left; font-family: 'Archivo', sans-serif; font-size: 16px; font-weight: {{ tab.weight }}; color: {{ tab.color }}; padding: 12px 0; border-bottom: 1px solid rgba(29,36,51,0.08);">{{ tab.label }}</button>
+        </sc-for>
+      </nav>
+    </sc-if>
   </header>
 
   <!-- ============ HOME ============ -->
@@ -97,10 +115,10 @@
       <div style="max-width: 1160px; margin: 0 auto; padding: 72px 24px;">
         <div style="max-width: 640px; margin: 0 auto 56px; text-align: center;">
           <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 14px;">Two families, one New York love story</div>
-          <p style="font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 3.2vw, 32px); line-height: 1.4; margin: 0; color: #1d2433;">From a Central Park yes to a rooftop in Little Neck — we can't wait to celebrate with the people we love most.</p>
+          <p style="font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 2.8vw, 30px); line-height: 1.4; margin: 0; color: #1d2433;">From a Central Park yes to a rooftop in Little Neck — we can't wait to celebrate with the people we love.</p>
         </div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-          <sc-for list="{{ homePhotos }}" as="ph" hint-placeholder-count="2">
+          <sc-for list="{{ homePhotos }}" as="ph" hint-placeholder-count="3">
             <figure style="margin: 0;">
               <div style="position: relative; aspect-ratio: 4 / 3; background: #e9e3d3; border-radius: 6px; overflow: hidden;">
                 <img src="{{ ph.src }}" alt="{{ ph.alt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: {{ ph.objectPosition }};">
@@ -151,7 +169,8 @@
     <main data-screen-label="Il Bacco" style="animation: fadeUp 0.4s ease; max-width: 1160px; margin: 0 auto; padding: 64px 24px 96px; width: 100%; box-sizing: border-box;">
       <div style="text-align: center; margin-bottom: 48px;">
         <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 12px;">The Venue</div>
-        <h2 style="margin: 0 0 16px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">Il Bacco</h2>
+        <h2 style="margin: 0 0 8px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">Il Bacco</h2>
+        <div style="font-size: 15px; color: #7a8090; margin-bottom: 16px;">253-24 Northern Blvd, Little Neck, NY 11362</div>
         <p style="margin: 0 auto; max-width: 560px; font-size: 16px; line-height: 1.65; color: #454c5c;">A beloved Italian restaurant in Little Neck, where our whole day unfolds under one roof — from the rooftop ceremony to the last song of the afterparty.</p>
       </div>
 
@@ -207,6 +226,18 @@
         <h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">Saturday, November 7, 2026</h2>
       </div>
 
+      <div style="background: #26493a; border-radius: 6px; padding: 28px; margin-bottom: 40px;">
+        <div style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #a8c6dd; margin-bottom: 14px;">Registry</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+          <a href="https://www.bloomingdales.com/registry/Lisa-Stern-Peter-Fishman/1620668" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; background: #ffffff; border-radius: 4px; padding: 22px; text-decoration: none;">
+            <span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 22px; color: #1d2433;">bloomingdale's</span>
+          </a>
+          <a href="https://www.crateandbarrel.com/gift-registry/lisa-stern-and-peter-fishman/r7585325" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; background: #ffffff; border-radius: 4px; padding: 22px; text-decoration: none;">
+            <span style="font-family: 'Archivo', sans-serif; font-weight: 700; letter-spacing: 0.02em; font-size: 18px; color: #1d2433; text-transform: uppercase;">Crate&amp;Barrel</span>
+          </a>
+        </div>
+      </div>
+
       <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; overflow: hidden; margin-bottom: 48px;">
         <sc-for list="{{ schedule }}" as="ev" hint-placeholder-count="5">
           <div style="display: grid; grid-template-columns: minmax(130px, 160px) 1fr; gap: 16px; padding: 18px 24px; border-bottom: 1px solid rgba(29,36,51,0.08); align-items: baseline;">
@@ -246,8 +277,7 @@
           <a href="tel:+15167732000" style="color: #a8c6dd;">516-773-2000</a> · <a href="https://www.innatgreatneck.com/" target="_blank" rel="noopener" style="color: #a8c6dd;">innatgreatneck.com</a>
         </div>
         <div style="margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap;">
-          <div style="padding: 10px 14px; background: rgba(246,243,234,0.12); border-radius: 4px; font-family: monospace; font-size: 13px; color: #e8d9b8;">Room block link: {{ roomBlockLink }}</div>
-          <div style="padding: 10px 14px; background: rgba(246,243,234,0.12); border-radius: 4px; font-family: monospace; font-size: 13px; color: #e8d9b8;">Book by: {{ roomBlockCutoff }}</div>
+          <div style="font-size: 13.5px; color: rgba(246,243,234,0.75); font-style: italic;">{{ roomBlockNote }}</div>
         </div>
       </div>
 
@@ -257,12 +287,7 @@
         <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 24px;">
           <div style="font-weight: 600; font-size: 17px; color: #1d2433; margin-bottom: 6px;">Courtyard by Marriott</div>
           <div style="font-size: 14px; color: #5a6070; margin-bottom: 14px;">New York Queens / Fresh Meadows</div>
-          <div style="padding: 8px 12px; background: #f6f3ea; border-radius: 4px; font-family: monospace; font-size: 12.5px; color: #8a6b3f; display: inline-block;">[BOOKING LINK TBD]</div>
-        </div>
-        <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 24px;">
-          <div style="font-weight: 600; font-size: 17px; color: #1d2433; margin-bottom: 6px;">Fairfield Inn &amp; Suites</div>
-          <div style="font-size: 14px; color: #5a6070; margin-bottom: 14px;">New York Queens / Fresh Meadows</div>
-          <div style="padding: 8px 12px; background: #f6f3ea; border-radius: 4px; font-family: monospace; font-size: 12.5px; color: #8a6b3f; display: inline-block;">[BOOKING LINK TBD]</div>
+          <a href="{{ courtyardLink }}" target="_blank" rel="noopener" style="display: inline-block; padding: 8px 14px; background: #f6f3ea; border-radius: 4px; font-size: 13px; font-weight: 600; color: #26493a; text-decoration: none;">Search availability</a>
         </div>
       </div>
     </main>
@@ -278,6 +303,12 @@
 
       <div style="display: flex; flex-direction: column; gap: 20px;">
         <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 28px;">
+          <h3 style="margin: 0 0 10px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 26px; color: #1d2433;">Driving &amp; parking</h3>
+          <div style="font-size: 15.5px; line-height: 1.65; color: #454c5c; margin-bottom: 12px;">{{ parkingNote }}</div>
+          <a href="{{ mapLink }}" target="_blank" rel="noopener" style="display: inline-block; padding: 10px 16px; background: #f6f3ea; border-radius: 4px; font-size: 13.5px; font-weight: 600; color: #26493a; text-decoration: none;">Open in Google Maps</a>
+        </div>
+
+        <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 28px;">
           <h3 style="margin: 0 0 10px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 26px; color: #1d2433;">By LIRR</h3>
           <p style="margin: 0 0 12px; font-size: 15.5px; line-height: 1.65; color: #454c5c;">Take the <strong>Port Washington Branch</strong> to <strong>Little Neck</strong> — the station is minutes from Il Bacco. Aim to arrive at Little Neck around <strong>4:40–4:50 PM</strong> for a comfortable 5:00 PM arrival.</p>
           <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #5a6070;">Please verify exact train times closer to the wedding using the MTA TrainTime app or <a href="https://www.mta.info/" target="_blank" rel="noopener">mta.info</a>.</p>
@@ -291,12 +322,6 @@
             <button onClick="{{ copyAddress }}" style="background: #26493a; color: #f6f3ea; border: none; border-radius: 4px; padding: 12px 20px; font-family: 'Archivo', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer;" style-hover="background: #1c382c;">{{ copyLabel }}</button>
           </div>
         </div>
-
-        <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 28px;">
-          <h3 style="margin: 0 0 10px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 26px; color: #1d2433;">Driving &amp; parking</h3>
-          <div style="font-size: 15.5px; line-height: 1.65; color: #454c5c; margin-bottom: 12px;">{{ parkingNote }}</div>
-          <a href="{{ mapLink }}" target="_blank" rel="noopener" style="display: inline-block; padding: 10px 16px; background: #f6f3ea; border-radius: 4px; font-size: 13.5px; font-weight: 600; color: #26493a; text-decoration: none;">Open in Google Maps</a>
-        </div>
       </div>
     </main>
   </sc-if>
@@ -306,9 +331,9 @@
     <main data-screen-label="RSVP" style="animation: fadeUp 0.4s ease; max-width: 640px; margin: 0 auto; padding: 64px 24px 96px; width: 100%; box-sizing: border-box; text-align: center;">
       <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 12px;">Join Us</div>
       <h2 style="margin: 0 0 16px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">RSVP</h2>
-      <p style="margin: 0 0 28px; font-size: 16px; line-height: 1.65; color: #454c5c;">We so hope you can make it. Kindly reply by <span style="font-family: monospace; color: #8a6b3f;">{{ rsvpDeadline }}</span>.</p>
-      <a href="#" style="display: inline-block; background: #b05f36; color: #f6f3ea; border-radius: 4px; padding: 16px 48px; font-family: 'Archivo', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;" style-hover="background: #9a4f2a; color: #f6f3ea;">RSVP</a>
-      <div style="margin-top: 14px; font-family: monospace; font-size: 13px; color: #8a6b3f;">{{ rsvpLink }}</div>
+      <p style="margin: 0 0 28px; font-size: 16px; line-height: 1.65; color: #454c5c;">We so hope you can make it. Kindly reply by <strong style="color: #1d2433;">{{ rsvpDeadline }}</span>.</p>
+<a href="{{ rsvpLink }}" target="_blank" rel="noopener" style="display: inline-block; background: #b05f36; color: #f6f3ea; border-radius: 4px; padding: 16px 48px; font-family: 'Archivo', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;" style-hover="background: #9a4f2a; color: #f6f3ea;">RSVP</a>
+      <div style="margin-top: 16px; font-size: 14px; color: #5a6070;">Or email us at <a href="mailto:sternfishmanwedding@gmail.com">sternfishmanwedding@gmail.com</a></div>
 
       <div style="margin-top: 48px; background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 28px; text-align: left;">
         <div style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #26493a; font-weight: 600; margin-bottom: 14px;">The form will ask about</div>
@@ -321,62 +346,47 @@
     </main>
   </sc-if>
 
-  <!-- ============ PHOTOS ============ -->
-  <sc-if value="{{ isPhotos }}" hint-placeholder-val="{{ false }}">
-    <main data-screen-label="Photos" style="animation: fadeUp 0.4s ease; max-width: 1160px; margin: 0 auto; padding: 64px 24px 96px; width: 100%; box-sizing: border-box;">
-      <div style="text-align: center; margin-bottom: 48px;">
-        <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 12px;">Gallery</div>
-        <h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">Photos</h2>
-      </div>
-      <sc-for list="{{ galleryGroups }}" as="grp" hint-placeholder-count="4">
-        <div style="margin-bottom: 48px;">
-          <h3 style="margin: 0 0 18px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 28px; color: #1d2433; border-bottom: 1px solid rgba(29,36,51,0.14); padding-bottom: 10px;">{{ grp.title }}</h3>
-          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px;">
-            <sc-for list="{{ grp.items }}" as="ph" hint-placeholder-count="3">
-              <figure style="margin: 0;">
-                <div style="position: relative; aspect-ratio: {{ ph.ratio }}; background: #e9e3d3; border-radius: 6px; overflow: hidden;">
-                  <img src="{{ ph.src }}" alt="{{ ph.alt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: {{ ph.fit }}; object-position: {{ ph.objectPosition }};">
-                </div>
-                <figcaption style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: #5a6070; margin-top: 8px;">{{ ph.caption }}</figcaption>
-              </figure>
-            </sc-for>
-          </div>
-        </div>
-      </sc-for>
-    </main>
-  </sc-if>
-
   <!-- ============ FOOTER ============ -->
   <footer style="margin-top: auto; background: #1d2433; color: rgba(246,243,234,0.75); text-align: center; padding: 40px 24px;">
     <div style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #f6f3ea; margin-bottom: 8px;">Lisa <span style="font-style: italic; color: #d9a988;">&amp;</span> Pete</div>
-    <div style="font-size: 13.5px; letter-spacing: 0.06em;">November 7, 2026 · Il Bacco · Little Neck, New York</div>
+    <div style="font-size: 13.5px; letter-spacing: 0.06em;">November 7, 2026 · Il Bacco · 253-24 Northern Blvd, Little Neck, Queens, NY 11362</div>
     <div style="margin-top: 14px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: rgba(246,243,234,0.55);">Tying the knot of invisible strings</div>
   </footer>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { tab: 'home', copied: false };
+  state = { tab: 'home', copied: false, mobileNavOpen: false, isMobile: false };
+
+  componentDidMount() {
+    this.updateWidth = () => this.setState({ isMobile: window.innerWidth < 860 });
+    this.updateWidth();
+    window.addEventListener('resize', this.updateWidth);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWidth);
+  }
 
   // Central editable image data
   images = [
     { src: 'uploads/hero-proposal-central-park.jpg', alt: 'Proposal in Central Park with the New York skyline and lake behind the couple', caption: 'The moment everything changed in Central Park.', section: 'hero', objectPosition: 'center 58%', visible: true },
     { src: 'uploads/story-proposal-wide.jpg', alt: 'Wide Central Park proposal scene beside the lake', caption: 'A yes in the middle of New York.', section: 'story', group: 'proposal', objectPosition: 'center 58%', visible: true },
-    { src: 'uploads/story-boat-trip.jpg', alt: 'Couple smiling together on a boat on calm water', caption: 'Somewhere on the water, exactly where we wanted to be.', section: 'story', objectPosition: 'left center', visible: true },
+    { src: 'uploads/story-boat-trip.jpg', alt: 'Couple smiling together on a boat on calm water', caption: 'On the water in Lake Garda.', section: 'story', objectPosition: 'left center', visible: true },
     { src: 'uploads/story-central-park.jpg', alt: 'Couple standing by the lake in Central Park on a sunny day', caption: 'A favorite kind of New York day.', section: 'story', group: 'newyork', objectPosition: 'center 30%', visible: true },
     { src: 'uploads/IMG_0929-f1f8c200.jpeg', alt: 'Lisa and Pete smiling closely together indoors', caption: 'Officially, happily, a crown of two.', section: 'story', objectPosition: 'center 30%', visible: true },
     { src: 'uploads/IMG_1273-a6eb4bb1.jpeg', alt: 'Pete and Lisa in ski gear at a snowy Montana resort', caption: 'Montana adventures with the Sterns.', section: 'story', objectPosition: 'center 30%', visible: true },
     { src: 'uploads/IMG_9250-3f199009.jpeg', alt: 'Lisa and Pete taking a selfie beneath the blue whale at the American Museum of Natural History', caption: 'Where invisible strings first pulled tight.', section: 'story', objectPosition: 'center 40%', visible: true },
     { src: 'uploads/IMG_3900-82__darker_natural_color.jpg', alt: 'Lisa jumping into a hug with Pete by the Central Park lake, San Remo towers behind them', caption: 'Central Park, Knicks, Italy — a summer to remember.', section: 'story', objectPosition: 'center center', ratio: '3 / 4', fit: 'contain', visible: true },
-    { src: 'uploads/gallery-palm-hug.jpg', alt: 'Couple hugging on a balcony with palm trees and soft clouds behind them', caption: 'Sunshine, palm trees, and the easiest yes.', section: 'gallery', group: 'travel', objectPosition: 'center 30%', ratio: '3 / 4', visible: true },
+    { src: 'uploads/gallery-palm-hug.jpg', alt: 'Couple hugging on a balcony with palm trees and soft clouds behind them', caption: 'Sunshine, palm trees, and the easiest yes.', section: 'gallery', group: 'travel', objectPosition: 'center 30%', ratio: '3 / 4', visible: false },
     { src: 'uploads/IMG_8815-6bb25d0f.jpeg', alt: 'Couple smiling together on a pool deck surrounded by trees in the Hamptons', caption: 'Sag Harbor pool days.', section: 'gallery', group: 'travel', objectPosition: 'center 30%', ratio: '3 / 4', visible: true },
-    { src: 'uploads/gallery-garden-path.jpg', alt: 'Couple standing together on a garden path lined with palm trees', caption: 'Garden walks and warm lights.', section: 'gallery', group: 'travel', objectPosition: 'center 30%', ratio: '3 / 4', visible: true },
+    { src: 'uploads/gallery-garden-path.jpg', alt: 'Couple standing together on a garden path lined with palm trees', caption: 'Garden walks and warm lights.', section: 'gallery', group: 'travel', objectPosition: 'center 30%', ratio: '3 / 4', visible: false },
     { src: 'uploads/gallery-yankees-selfie.jpg', alt: 'Couple smiling together at a Yankees game', caption: 'Ballpark days.', section: 'gallery', group: 'sports', objectPosition: 'center 40%', visible: true },
     { src: 'uploads/gallery-us-open.jpg', alt: 'Couple smiling together in stadium seats at the US Open', caption: 'Courtside-ish and very happy about it.', section: 'gallery', group: 'sports', objectPosition: 'center 40%', visible: true },
     { src: 'uploads/gallery-knicks.jpg', alt: 'Couple smiling at a Knicks game with the arena behind them', caption: 'New York nights, Knicks lights.', section: 'gallery', group: 'sports', objectPosition: 'center 40%', visible: true },
-    { src: 'uploads/gallery-butterfly-garden.jpg', alt: 'Couple smiling in a lush butterfly garden', caption: 'A little green escape.', section: 'gallery', group: 'newyork', objectPosition: 'center 35%', visible: true },
+    { src: 'uploads/gallery-butterfly-garden.jpg', alt: 'Couple smiling in a lush butterfly garden', caption: 'A little green escape.', section: 'gallery', group: 'newyork', objectPosition: 'center 35%', visible: false },
     { src: 'uploads/gallery-natural-history.jpg', alt: 'Couple taking a selfie in front of the whale at the natural history museum', caption: 'Museum date, whale included.', section: 'gallery', group: 'newyork', objectPosition: 'center 40%', visible: true },
-    { src: 'uploads/gallery-maries-crisis.jpg', alt: "Couple bundled up outside Marie's Crisis Cafe at night", caption: 'A classic New York night out.', section: 'gallery', group: 'newyork', objectPosition: 'center 45%', ratio: '3 / 4', visible: true },
+    { src: 'uploads/gallery-maries-crisis.jpg', alt: "Couple bundled up outside Marie's Crisis Cafe at night", caption: 'A classic New York night out.', section: 'gallery', group: 'newyork', objectPosition: 'center 45%', ratio: '3 / 4', visible: false },
+    { src: 'uploads/home-summer-yankees.jpg', alt: 'Lisa and Pete smiling together at a Yankees game, wearing yellow and a green cap', caption: "Summer in the city.", section: 'home', objectPosition: 'center 30%', visible: true },
     { src: 'uploads/family-dinner.jpg', alt: 'Family gathered around a restaurant table', caption: 'Family around the table.', section: 'family', group: 'family', objectPosition: 'center center', visible: false },
     { src: 'uploads/family-lobby.jpg', alt: 'Family standing together indoors under a patterned ceiling of round lights', caption: 'Family together under the lights.', section: 'family', group: 'family', objectPosition: 'center 55%', visible: false },
     { src: 'uploads/family-candid-living-room.jpg', alt: 'Large family group laughing while a child jumps through the foreground', caption: 'A perfectly imperfect family photo.', section: 'family', group: 'family', objectPosition: 'center center', visible: false }
@@ -384,24 +394,26 @@ class Component extends DCLogic {
 
   // Central editable TBD values
   tbd = {
-    rsvpLink: '[RSVP LINK TBD]',
+    rsvpLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSterOJLMAK1DXxUGGcYiur8J7qIDogHkEm1qsG8IbU7YqWQ/viewform',
     rsvpDeadline: 'September 1, 2026',
     roomBlockLink: '[ROOM BLOCK LINK TBD]',
+    courtyardLink: 'https://www.marriott.com/search/findHotels.mi?destinationAddress.city=Fresh+Meadows&destinationAddress.stateProvince=NY&marriottBrands=CY&fromDate=11/07/2026&toDate=11/08/2026',
     roomBlockCutoff: '[CUTOFF DATE TBD]',
     mapLink: 'https://www.google.com/maps/search/?api=1&query=Il+Bacco+253-24+Northern+Blvd+Little+Neck+NY+11362',
     dressCode: 'Cocktail attire — festive and put-together, but not black tie.',
-    ceremonyWording: '[CEREMONY WORDING TBD]',
+    ceremonyWording: 'Officiated by Cantor Eric Schulmiller of the Reconstructionist Synagogue of the North Shore (RSNS), Lisa\'s childhood temple.',
     weatherBackup: 'The rooftop is enclosed and heated, so it will be lovely rain or shine in November.',
     parking: 'The restaurant offers complimentary valet parking in the lot directly adjacent to the entrance. There will be an open bar, so please plan accordingly and do not drink and drive.',
-    contact: '[WEDDING CONTACT TBD]',
-    bring: '[ANYTHING TO BRING / KNOW TBD]'
+    contact: 'sternfishmanwedding@gmail.com',
+    bring: 'Your best Hora dance moves.'
   };
 
   find(name) { return this.images.find(i => i.src.indexOf(name) !== -1) || {}; }
 
   renderVals() {
     const t = this.state.tab;
-    const set = (tab) => () => { this.setState({ tab, copied: false }); window.scrollTo(0, 0); };
+    const set = (tab) => () => { this.setState({ tab, copied: false, mobileNavOpen: false }); window.scrollTo(0, 0); };
+    const toggleMobileNav = () => this.setState(s => ({ mobileNavOpen: !s.mobileNavOpen }));
     const tabs = [
       ['home', 'Home'], ['story', 'Our Story'], ['venue', 'Il Bacco'], ['details', 'Wedding Details'],
       ['hotels', 'Hotels'], ['transport', 'Transportation'], ['rsvp', 'RSVP'], ['photos', 'Photos']
@@ -424,13 +436,14 @@ class Component extends DCLogic {
       { date: 'May 2025', title: 'The Second Crown', body: 'Pete meets a second Crown, Lindsay, and things become official.', img: crown.src, imgAlt: crown.alt, imgPos: crown.objectPosition, imgRatio: '3 / 2', imgFit: 'cover', imgCaption: crown.caption },
       { date: 'Summer 2025', title: 'The Shore and the Hamptons', body: "Lisa visits the Shore and Pete visits the Hamptons. Love blooms over summer weekends, family time, and getting folded into each other's worlds.", img: boat.src, imgAlt: boat.alt, imgPos: boat.objectPosition, imgRatio: '3 / 2', imgFit: 'cover', imgCaption: boat.caption },
       { date: 'Winter 2025/2026', title: 'Families and Adventures', body: 'Lisa comes to Thanksgiving at Garfield Terrace. Pete goes to Mexico and Montana with the Sterns.', img: montana.src, imgAlt: montana.alt, imgPos: montana.objectPosition, imgRatio: '3 / 2', imgFit: 'cover', imgCaption: montana.caption },
-      { date: 'June 2026', title: 'Central Park, Knicks, Italy — a summer to remember', body: 'Pete proposes in Central Park. Soon after, the Knicks win the NBA Championship, and Lisa and Pete head to Italy.', img: parkSpot.src, imgAlt: parkSpot.alt, imgPos: parkSpot.objectPosition, imgRatio: parkSpot.ratio || '3 / 2', imgFit: parkSpot.fit || 'cover', imgCaption: parkSpot.caption },
-      { date: 'November 7, 2026', title: 'The Wedding', body: 'Il Bacco · Little Neck, New York' }
+      { date: 'June 2026', title: 'Paper Rings — a summer to remember', body: 'Pete proposes in Central Park. Soon after, the Knicks win the NBA Championship, and Lisa and Pete head to Italy.', img: parkSpot.src, imgAlt: parkSpot.alt, imgPos: parkSpot.objectPosition, imgRatio: parkSpot.ratio || '3 / 2', imgFit: parkSpot.fit || 'cover', imgCaption: parkSpot.caption },
+      { date: 'November 7, 2026', title: 'The Wedding - Speak Now or Forever Hold Your Peace', body: 'Il Bacco · 253-24 Northern Blvd, Little Neck, Queens, NY 11362' }
     ];
 
     const homeKnicks = this.find('gallery-knicks');
     const homeBoat = this.find('story-boat-trip');
-    const homePhotos = [homeBoat, homeKnicks].map(p => ({ src: p.src, alt: p.alt, caption: p.caption, objectPosition: p.objectPosition }));
+    const homeSummer = this.find('home-summer-yankees');
+    const homePhotos = [homeBoat, homeKnicks, homeSummer].map(p => ({ src: p.src, alt: p.alt, caption: p.caption, objectPosition: p.objectPosition }));
 
     const venueTiles = [
       { label: 'Exterior', src: 'uploads/il-bacco-exterior.jpg', alt: 'Il Bacco exterior entrance with awnings and signage on Northern Blvd' },
@@ -447,7 +460,8 @@ class Component extends DCLogic {
     ];
 
     const isTbd = (v) => typeof v === 'string' && v.indexOf('[') === 0;
-    const noteStyle = (v) => isTbd(v) ? { color: '#8a6b3f', font: 'monospace' } : { color: '#454c5c', font: "'Archivo', sans-serif" };
+    const noteStyle = (v) => isTbd(v) ? { color: '#8a8267', font: "'Archivo', sans-serif" } : { color: '#454c5c', font: "'Archivo', sans-serif" };
+    const friendly = (v) => isTbd(v) ? 'Details coming soon.' : v;
     const detailNotes = [
       { label: 'Dress code', value: this.tbd.dressCode },
       { label: 'Ceremony', value: this.tbd.ceremonyWording },
@@ -455,21 +469,7 @@ class Component extends DCLogic {
       { label: 'Parking', value: this.tbd.parking },
       { label: 'Wedding contact', value: this.tbd.contact },
       { label: 'Good to bring / know', value: this.tbd.bring }
-    ].map(n => ({ ...n, ...noteStyle(n.value) }));
-
-    const byGroup = (g) => this.images.filter(i => i.group === g && i.visible !== false).map(i => ({
-      src: i.src, alt: i.alt, caption: i.caption, objectPosition: i.objectPosition,
-      ratio: i.ratio || '4 / 3', fit: 'cover'
-    }));
-    const proposal = [this.find('story-proposal-wide')]
-      .map(i => ({ src: i.src, alt: i.alt, caption: i.caption, objectPosition: i.objectPosition, ratio: '3 / 2', fit: 'cover' }));
-    const galleryGroups = [
-      { title: 'The Proposal', items: proposal },
-      { title: 'Our New York', items: byGroup('newyork') },
-      { title: 'Travel', items: byGroup('travel') },
-      { title: 'Sports', items: byGroup('sports') },
-      { title: 'Family', items: byGroup('family') }
-    ].filter(g => g.items.length > 0);
+    ].map(n => ({ label: n.label, value: friendly(n.value), ...noteStyle(n.value) }));
 
     const copyAddress = () => {
       const addr = 'Il Bacco, 253-24 Northern Blvd, Little Neck, NY 11362';
@@ -478,15 +478,18 @@ class Component extends DCLogic {
     };
 
     return {
-      navItems,
+      navItems, toggleMobileNav, mobileNavOpen: this.state.mobileNavOpen,
+      hamburgerDisplay: this.state.isMobile ? 'flex' : 'none',
+      desktopNavDisplay: this.state.isMobile ? 'none' : 'flex',
       isHome: t === 'home', isStory: t === 'story', isVenue: t === 'venue', isDetails: t === 'details',
-      isHotels: t === 'hotels', isTransport: t === 'transport', isRsvp: t === 'rsvp', isPhotos: t === 'photos',
+      isHotels: t === 'hotels', isTransport: t === 'transport', isRsvp: t === 'rsvp',
       goHome: set('home'), goRsvp: set('rsvp'), goDetails: set('details'),
-      homePhotos, storyItems, venueTiles, schedule, detailNotes, galleryGroups,
+      homePhotos, storyItems, venueTiles, schedule, detailNotes,
       copyAddress, copyLabel: this.state.copied ? 'Copied!' : 'Copy address',
       rsvpLink: this.tbd.rsvpLink, rsvpDeadline: this.tbd.rsvpDeadline,
       roomBlockLink: this.tbd.roomBlockLink, roomBlockCutoff: this.tbd.roomBlockCutoff,
-      mapLink: this.tbd.mapLink, parkingNote: this.tbd.parking
+      mapLink: this.tbd.mapLink, parkingNote: this.tbd.parking, courtyardLink: this.tbd.courtyardLink,
+      roomBlockNote: 'Room block link and booking cutoff coming soon — check back this summer.'
     };
   }
 }
