@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<template id="__bundler_thumbnail" data-bg-color="#26493a">
+  <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+    <text x="100" y="78" font-family="Georgia, serif" font-size="34" fill="#f6f3ea" text-anchor="middle" font-style="italic">L &amp; P</text>
+  </svg>
+</template>
+<helmet>
+<meta name="ext-resource-dependency" content="uploads/hero-proposal-central-park.jpg">
+<meta name="ext-resource-dependency" content="uploads/story-proposal-wide.jpg">
+<meta name="ext-resource-dependency" content="uploads/story-boat-trip.jpg">
+<meta name="ext-resource-dependency" content="uploads/story-central-park.jpg">
+<meta name="ext-resource-dependency" content="uploads/IMG_0929-f1f8c200.jpeg">
+<meta name="ext-resource-dependency" content="uploads/IMG_1273-a6eb4bb1.jpeg">
+<meta name="ext-resource-dependency" content="uploads/IMG_9250-3f199009.jpeg">
+<meta name="ext-resource-dependency" content="uploads/IMG_3900-82__darker_natural_color.jpg">
+<meta name="ext-resource-dependency" content="uploads/IMG_8815-6bb25d0f.jpeg">
+<meta name="ext-resource-dependency" content="uploads/gallery-palm-hug.jpg">
+<meta name="ext-resource-dependency" content="uploads/gallery-garden-path.jpg">
+<meta name="ext-resource-dependency" content="uploads/gallery-yankees-selfie.jpg">
+<meta name="ext-resource-dependency" content="uploads/gallery-us-open.jpg">
+<meta name="ext-resource-dependency" content="uploads/gallery-knicks.jpg">
+<meta name="ext-resource-dependency" content="uploads/gallery-butterfly-garden.jpg">
+<meta name="ext-resource-dependency" content="uploads/gallery-natural-history.jpg">
+<meta name="ext-resource-dependency" content="uploads/gallery-maries-crisis.jpg">
+<meta name="ext-resource-dependency" content="uploads/family-dinner.jpg">
+<meta name="ext-resource-dependency" content="uploads/family-lobby.jpg">
+<meta name="ext-resource-dependency" content="uploads/family-candid-living-room.jpg">
+<meta name="ext-resource-dependency" content="uploads/il-bacco-dining.jpg">
+<meta name="ext-resource-dependency" content="uploads/il-bacco-rooftop.jpg">
+<meta name="ext-resource-dependency" content="uploads/il-bacco-exterior.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Archivo:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #f6f3ea; color: #1d2433; font-family: 'Archivo', sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: #26493a; text-decoration-color: rgba(38,73,58,0.4); }
+  a:hover { color: #b05f36; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+</style>
+</helmet>
+
+<div style="min-height: 100vh; display: flex; flex-direction: column; background: #f6f3ea;">
+
+  <!-- ============ NAV ============ -->
+  <header style="position: sticky; top: 0; z-index: 50; background: rgba(246,243,234,0.94); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(29,36,51,0.12);">
+    <div style="max-width: 1160px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+      <div style="font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; letter-spacing: 0.04em; color: #1d2433; cursor: pointer;" onClick="{{ goHome }}">L <span style="color: #b05f36; font-style: italic;">&amp;</span> P</div>
+      <nav style="display: flex; gap: 4px; overflow-x: auto; max-width: 100%; scrollbar-width: none;">
+        <sc-for list="{{ navItems }}" as="tab" hint-placeholder-count="8">
+          <button onClick="{{ tab.go }}" style="border: none; background: none; cursor: pointer; font-family: 'Archivo', sans-serif; font-size: 13.5px; font-weight: {{ tab.weight }}; letter-spacing: 0.02em; color: {{ tab.color }}; padding: 8px 10px; border-bottom: 2px solid {{ tab.underline }}; white-space: nowrap;" style-hover="color: #b05f36;">{{ tab.label }}</button>
+        </sc-for>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HOME ============ -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <main data-screen-label="Home" style="animation: fadeUp 0.4s ease;">
+      <div style="position: relative; height: 80vh; min-height: 500px; background: #1d2433; overflow: hidden;">
+        <img src="uploads/hero-proposal-central-park.jpg" alt="Pete kneeling to propose to Lisa beside the Conservatory Water in Central Park" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 24%;">
+        <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(20,26,40,0.72) 0%, rgba(20,26,40,0.28) 42%, rgba(20,26,40,0.02) 70%);"></div>
+        <div style="position: absolute; left: 0; right: 0; top: 0; padding: 44px 24px 0; text-align: center;">
+          <div style="font-family: 'Archivo', sans-serif; font-size: 13px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(246,243,234,0.9); margin-bottom: 14px;">We're getting married</div>
+          <h1 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(52px, 9vw, 104px); line-height: 1; color: #f6f3ea;">Lisa <span style="font-style: italic; color: #d9a988;">&amp;</span> Pete</h1>
+          <div style="margin-top: 16px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(19px, 2.6vw, 26px); color: rgba(246,243,234,0.92);">November 7, 2026 · Little Neck, New York</div>
+          <div style="margin-top: 28px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <button onClick="{{ goRsvp }}" style="background: #b05f36; color: #f6f3ea; border: none; border-radius: 4px; padding: 14px 34px; font-family: 'Archivo', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;" style-hover="background: #9a4f2a;">RSVP</button>
+            <button onClick="{{ goDetails }}" style="background: rgba(246,243,234,0.14); color: #f6f3ea; border: 1px solid rgba(246,243,234,0.6); border-radius: 4px; padding: 14px 34px; font-family: 'Archivo', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;" style-hover="background: rgba(246,243,234,0.26);">View Details</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: #26493a; color: #f6f3ea;">
+        <div style="max-width: 1160px; margin: 0 auto; padding: 28px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; text-align: center;">
+          <div>
+            <div style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #a8c6dd; margin-bottom: 6px;">The Day</div>
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 22px;">Saturday, November 7, 2026</div>
+          </div>
+          <div>
+            <div style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #a8c6dd; margin-bottom: 6px;">The Place</div>
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 22px;">Il Bacco · Little Neck, NY</div>
+          </div>
+          <div>
+            <div style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #a8c6dd; margin-bottom: 6px;">Arrive By</div>
+            <div style="font-family: 'Cormorant Garamond', serif; font-size: 22px;">5:00 PM · Ceremony 5:30 PM</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="max-width: 1160px; margin: 0 auto; padding: 72px 24px;">
+        <div style="max-width: 640px; margin: 0 auto 56px; text-align: center;">
+          <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 14px;">Two families, one New York love story</div>
+          <p style="font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 3.2vw, 32px); line-height: 1.4; margin: 0; color: #1d2433;">From a Central Park yes to a rooftop in Little Neck — we can't wait to celebrate with the people we love most.</p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+          <sc-for list="{{ homePhotos }}" as="ph" hint-placeholder-count="2">
+            <figure style="margin: 0;">
+              <div style="position: relative; aspect-ratio: 4 / 3; background: #e9e3d3; border-radius: 6px; overflow: hidden;">
+                <img src="{{ ph.src }}" alt="{{ ph.alt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: {{ ph.objectPosition }};">
+              </div>
+              <figcaption style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: #5a6070; margin-top: 10px; text-align: center;">{{ ph.caption }}</figcaption>
+            </figure>
+          </sc-for>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ OUR STORY ============ -->
+  <sc-if value="{{ isStory }}" hint-placeholder-val="{{ false }}">
+    <main data-screen-label="Our Story" style="animation: fadeUp 0.4s ease; max-width: 880px; margin: 0 auto; padding: 64px 24px 96px; width: 100%; box-sizing: border-box;">
+      <div style="text-align: center; margin-bottom: 56px;">
+        <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 12px;">Our Story</div>
+        <h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">How we got here</h2>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <sc-for list="{{ storyItems }}" as="ch" hint-placeholder-count="5">
+          <div style="display: grid; grid-template-columns: 24px 1fr; gap: 20px;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div style="width: 11px; height: 11px; border-radius: 50%; background: #b05f36; margin-top: 6px; flex-shrink: 0;"></div>
+              <div style="width: 1px; flex: 1; background: repeating-linear-gradient(to bottom, #b8b09a 0px, #b8b09a 4px, transparent 4px, transparent 9px);"></div>
+            </div>
+            <div style="padding-bottom: 48px;">
+              <div style="font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #26493a; font-weight: 600; margin-bottom: 6px;">{{ ch.date }}</div>
+              <h3 style="margin: 0 0 10px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 30px; color: #1d2433;">{{ ch.title }}</h3>
+              <p style="margin: 0; font-size: 16px; line-height: 1.65; color: #454c5c; max-width: 560px;">{{ ch.body }}</p>
+              <sc-if value="{{ ch.img }}" hint-placeholder-val="{{ false }}">
+                <figure style="margin: 20px 0 0;">
+                  <div style="position: relative; aspect-ratio: {{ ch.imgRatio }}; max-width: 560px; background: #e9e3d3; border-radius: 6px; overflow: hidden;">
+                    <img src="{{ ch.img }}" alt="{{ ch.imgAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: {{ ch.imgFit }}; object-position: {{ ch.imgPos }};">
+                  </div>
+                  <figcaption style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: #5a6070; margin-top: 8px;">{{ ch.imgCaption }}</figcaption>
+                </figure>
+              </sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ IL BACCO ============ -->
+  <sc-if value="{{ isVenue }}" hint-placeholder-val="{{ false }}">
+    <main data-screen-label="Il Bacco" style="animation: fadeUp 0.4s ease; max-width: 1160px; margin: 0 auto; padding: 64px 24px 96px; width: 100%; box-sizing: border-box;">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 12px;">The Venue</div>
+        <h2 style="margin: 0 0 16px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">Il Bacco</h2>
+        <p style="margin: 0 auto; max-width: 560px; font-size: 16px; line-height: 1.65; color: #454c5c;">A beloved Italian restaurant in Little Neck, where our whole day unfolds under one roof — from the rooftop ceremony to the last song of the afterparty.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 48px;">
+        <sc-for list="{{ venueTiles }}" as="vt" hint-placeholder-count="3">
+          <div>
+            <div style="position: relative; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; background: #e9e3d3;">
+              <img src="{{ vt.src }}" alt="{{ vt.alt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #26493a; margin-top: 10px; text-align: center;">{{ vt.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; align-items: start;">
+        <div>
+          <h3 style="margin: 0 0 18px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 28px; color: #1d2433;">Where to go</h3>
+          <div style="display: flex; flex-direction: column; gap: 18px;">
+            <div style="display: flex; gap: 14px;">
+              <div style="width: 30px; height: 30px; border-radius: 50%; background: #26493a; color: #f6f3ea; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; flex-shrink: 0;">1</div>
+              <div style="font-size: 15.5px; line-height: 1.6; color: #454c5c;"><strong style="color: #1d2433;">Floor 3 Rooftop</strong> — the processional and ceremony begin at 5:30 PM sharp. Head straight up when you arrive.</div>
+            </div>
+            <div style="display: flex; gap: 14px;">
+              <div style="width: 30px; height: 30px; border-radius: 50%; background: #26493a; color: #f6f3ea; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; flex-shrink: 0;">2</div>
+              <div style="font-size: 15.5px; line-height: 1.6; color: #454c5c;"><strong style="color: #1d2433;">Floor 2 Dining Room</strong> — dinner is served on the second floor from 7 to 10 PM.</div>
+            </div>
+            <div style="display: flex; gap: 14px;">
+              <div style="width: 30px; height: 30px; border-radius: 50%; background: #26493a; color: #f6f3ea; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; flex-shrink: 0;">3</div>
+              <div style="font-size: 15.5px; line-height: 1.6; color: #454c5c;"><strong style="color: #1d2433;">Back to the Rooftop</strong> — the afterparty closes out the night from 10 to 11 PM.</div>
+            </div>
+          </div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 28px;">
+          <h3 style="margin: 0 0 14px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 24px; color: #1d2433;">Address &amp; contact</h3>
+          <div style="font-size: 15px; line-height: 1.8; color: #454c5c;">
+            Il Bacco<br>
+            253-24 Northern Blvd<br>
+            Little Neck, NY 11362<br>
+            <a href="tel:+17182247657">(718) 224-7657</a><br>
+            <a href="https://www.ilbaccony.com/" target="_blank" rel="noopener">ilbaccony.com</a> · <a href="https://www.ilbaccony.com/our-space" target="_blank" rel="noopener">See the spaces</a>
+          </div>
+          <div style="margin-top: 18px;"><a href="{{ mapLink }}" target="_blank" rel="noopener" style="display: inline-block; padding: 12px 18px; background: #f6f3ea; border-radius: 4px; font-size: 13.5px; font-weight: 600; color: #26493a; text-decoration: none;">Open in Google Maps</a></div>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ WEDDING DETAILS ============ -->
+  <sc-if value="{{ isDetails }}" hint-placeholder-val="{{ false }}">
+    <main data-screen-label="Wedding Details" style="animation: fadeUp 0.4s ease; max-width: 880px; margin: 0 auto; padding: 64px 24px 96px; width: 100%; box-sizing: border-box;">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 12px;">Wedding Details</div>
+        <h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">Saturday, November 7, 2026</h2>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; overflow: hidden; margin-bottom: 48px;">
+        <sc-for list="{{ schedule }}" as="ev" hint-placeholder-count="5">
+          <div style="display: grid; grid-template-columns: minmax(130px, 160px) 1fr; gap: 16px; padding: 18px 24px; border-bottom: 1px solid rgba(29,36,51,0.08); align-items: baseline;">
+            <div style="font-weight: 600; color: #26493a; font-size: 15px;">{{ ev.time }}</div>
+            <div style="font-size: 15.5px; color: #1d2433;">{{ ev.what }} <span style="color: #7a8090;">{{ ev.where }}</span>
+              <sc-if value="{{ ev.address }}" hint-placeholder-val="{{ false }}"><div style="font-size: 13px; color: #7a8090; margin-top: 2px;">{{ ev.address }}</div></sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <h3 style="margin: 0 0 18px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 28px; color: #1d2433;">Good to know</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+        <sc-for list="{{ detailNotes }}" as="note" hint-placeholder-count="6">
+          <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 20px;">
+            <div style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #26493a; font-weight: 600; margin-bottom: 8px;">{{ note.label }}</div>
+            <div style="font-size: 14px; line-height: 1.6; color: {{ note.color }}; font-family: {{ note.font }};">{{ note.value }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ HOTELS ============ -->
+  <sc-if value="{{ isHotels }}" hint-placeholder-val="{{ false }}">
+    <main data-screen-label="Hotels" style="animation: fadeUp 0.4s ease; max-width: 880px; margin: 0 auto; padding: 64px 24px 96px; width: 100%; box-sizing: border-box;">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 12px;">Where to Stay</div>
+        <h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">Hotels</h2>
+      </div>
+
+      <div style="background: #26493a; color: #f6f3ea; border-radius: 6px; padding: 32px; margin-bottom: 32px;">
+        <div style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #a8c6dd; margin-bottom: 10px;">Room block · Our recommended hotel</div>
+        <h3 style="margin: 0 0 12px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 32px;">Inn at Great Neck</h3>
+        <div style="font-size: 15px; line-height: 1.8; color: rgba(246,243,234,0.9);">
+          30 Cutter Mill Road, Great Neck, NY 11021<br>
+          <a href="tel:+15167732000" style="color: #a8c6dd;">516-773-2000</a> · <a href="https://www.innatgreatneck.com/" target="_blank" rel="noopener" style="color: #a8c6dd;">innatgreatneck.com</a>
+        </div>
+        <div style="margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap;">
+          <div style="padding: 10px 14px; background: rgba(246,243,234,0.12); border-radius: 4px; font-family: monospace; font-size: 13px; color: #e8d9b8;">Room block link: {{ roomBlockLink }}</div>
+          <div style="padding: 10px 14px; background: rgba(246,243,234,0.12); border-radius: 4px; font-family: monospace; font-size: 13px; color: #e8d9b8;">Book by: {{ roomBlockCutoff }}</div>
+        </div>
+      </div>
+
+      <h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 26px; color: #1d2433;">More options near Fresh Meadows</h3>
+      <p style="margin: 0 0 20px; font-size: 15px; color: #5a6070;">A short drive from Il Bacco — booking links coming soon.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+        <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 24px;">
+          <div style="font-weight: 600; font-size: 17px; color: #1d2433; margin-bottom: 6px;">Courtyard by Marriott</div>
+          <div style="font-size: 14px; color: #5a6070; margin-bottom: 14px;">New York Queens / Fresh Meadows</div>
+          <div style="padding: 8px 12px; background: #f6f3ea; border-radius: 4px; font-family: monospace; font-size: 12.5px; color: #8a6b3f; display: inline-block;">[BOOKING LINK TBD]</div>
+        </div>
+        <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 24px;">
+          <div style="font-weight: 600; font-size: 17px; color: #1d2433; margin-bottom: 6px;">Fairfield Inn &amp; Suites</div>
+          <div style="font-size: 14px; color: #5a6070; margin-bottom: 14px;">New York Queens / Fresh Meadows</div>
+          <div style="padding: 8px 12px; background: #f6f3ea; border-radius: 4px; font-family: monospace; font-size: 12.5px; color: #8a6b3f; display: inline-block;">[BOOKING LINK TBD]</div>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ TRANSPORTATION ============ -->
+  <sc-if value="{{ isTransport }}" hint-placeholder-val="{{ false }}">
+    <main data-screen-label="Transportation" style="animation: fadeUp 0.4s ease; max-width: 880px; margin: 0 auto; padding: 64px 24px 96px; width: 100%; box-sizing: border-box;">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 12px;">Getting There</div>
+        <h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">Transportation</h2>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 28px;">
+          <h3 style="margin: 0 0 10px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 26px; color: #1d2433;">By LIRR</h3>
+          <p style="margin: 0 0 12px; font-size: 15.5px; line-height: 1.65; color: #454c5c;">Take the <strong>Port Washington Branch</strong> to <strong>Little Neck</strong> — the station is minutes from Il Bacco. Aim to arrive at Little Neck around <strong>4:40–4:50 PM</strong> for a comfortable 5:00 PM arrival.</p>
+          <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #5a6070;">Please verify exact train times closer to the wedding using the MTA TrainTime app or <a href="https://www.mta.info/" target="_blank" rel="noopener">mta.info</a>.</p>
+        </div>
+
+        <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 28px;">
+          <h3 style="margin: 0 0 10px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 26px; color: #1d2433;">By Uber / Lyft</h3>
+          <p style="margin: 0 0 14px; font-size: 15.5px; line-height: 1.65; color: #454c5c;">Il Bacco is easy to reach by rideshare. Copy the address below straight into your app:</p>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <code style="background: #f6f3ea; border: 1px solid rgba(29,36,51,0.12); border-radius: 4px; padding: 12px 16px; font-size: 14px; color: #1d2433;">Il Bacco, 253-24 Northern Blvd, Little Neck, NY 11362</code>
+            <button onClick="{{ copyAddress }}" style="background: #26493a; color: #f6f3ea; border: none; border-radius: 4px; padding: 12px 20px; font-family: 'Archivo', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer;" style-hover="background: #1c382c;">{{ copyLabel }}</button>
+          </div>
+        </div>
+
+        <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 28px;">
+          <h3 style="margin: 0 0 10px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 26px; color: #1d2433;">Driving &amp; parking</h3>
+          <div style="font-size: 15.5px; line-height: 1.65; color: #454c5c; margin-bottom: 12px;">{{ parkingNote }}</div>
+          <a href="{{ mapLink }}" target="_blank" rel="noopener" style="display: inline-block; padding: 10px 16px; background: #f6f3ea; border-radius: 4px; font-size: 13.5px; font-weight: 600; color: #26493a; text-decoration: none;">Open in Google Maps</a>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ RSVP ============ -->
+  <sc-if value="{{ isRsvp }}" hint-placeholder-val="{{ false }}">
+    <main data-screen-label="RSVP" style="animation: fadeUp 0.4s ease; max-width: 640px; margin: 0 auto; padding: 64px 24px 96px; width: 100%; box-sizing: border-box; text-align: center;">
+      <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 12px;">Join Us</div>
+      <h2 style="margin: 0 0 16px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">RSVP</h2>
+      <p style="margin: 0 0 28px; font-size: 16px; line-height: 1.65; color: #454c5c;">We so hope you can make it. Kindly reply by <span style="font-family: monospace; color: #8a6b3f;">{{ rsvpDeadline }}</span>.</p>
+      <a href="#" style="display: inline-block; background: #b05f36; color: #f6f3ea; border-radius: 4px; padding: 16px 48px; font-family: 'Archivo', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;" style-hover="background: #9a4f2a; color: #f6f3ea;">RSVP</a>
+      <div style="margin-top: 14px; font-family: monospace; font-size: 13px; color: #8a6b3f;">{{ rsvpLink }}</div>
+
+      <div style="margin-top: 48px; background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 28px; text-align: left;">
+        <div style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #26493a; font-weight: 600; margin-bottom: 14px;">The form will ask about</div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px; line-height: 1.5; color: #454c5c;">
+          <div style="display: flex; gap: 10px;"><span style="color: #b05f36;">—</span> Will you be attending?</div>
+          <div style="display: flex; gap: 10px;"><span style="color: #b05f36;">—</span> Dietary restrictions</div>
+          <div style="display: flex; gap: 10px;"><span style="color: #b05f36;">—</span> A song that will get you on the dance floor</div>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ PHOTOS ============ -->
+  <sc-if value="{{ isPhotos }}" hint-placeholder-val="{{ false }}">
+    <main data-screen-label="Photos" style="animation: fadeUp 0.4s ease; max-width: 1160px; margin: 0 auto; padding: 64px 24px 96px; width: 100%; box-sizing: border-box;">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 12px;">Gallery</div>
+        <h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">Photos</h2>
+      </div>
+      <sc-for list="{{ galleryGroups }}" as="grp" hint-placeholder-count="4">
+        <div style="margin-bottom: 48px;">
+          <h3 style="margin: 0 0 18px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 28px; color: #1d2433; border-bottom: 1px solid rgba(29,36,51,0.14); padding-bottom: 10px;">{{ grp.title }}</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px;">
+            <sc-for list="{{ grp.items }}" as="ph" hint-placeholder-count="3">
+              <figure style="margin: 0;">
+                <div style="position: relative; aspect-ratio: {{ ph.ratio }}; background: #e9e3d3; border-radius: 6px; overflow: hidden;">
+                  <img src="{{ ph.src }}" alt="{{ ph.alt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: {{ ph.fit }}; object-position: {{ ph.objectPosition }};">
+                </div>
+                <figcaption style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: #5a6070; margin-top: 8px;">{{ ph.caption }}</figcaption>
+              </figure>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </main>
+  </sc-if>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="margin-top: auto; background: #1d2433; color: rgba(246,243,234,0.75); text-align: center; padding: 40px 24px;">
+    <div style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #f6f3ea; margin-bottom: 8px;">Lisa <span style="font-style: italic; color: #d9a988;">&amp;</span> Pete</div>
+    <div style="font-size: 13.5px; letter-spacing: 0.06em;">November 7, 2026 · Il Bacco · Little Neck, New York</div>
+    <div style="margin-top: 14px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: rgba(246,243,234,0.55);">Tying the knot of invisible strings</div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab: 'home', copied: false };
+
+  // Central editable image data
+  images = [
+    { src: 'uploads/hero-proposal-central-park.jpg', alt: 'Proposal in Central Park with the New York skyline and lake behind the couple', caption: 'The moment everything changed in Central Park.', section: 'hero', objectPosition: 'center 58%', visible: true },
+    { src: 'uploads/story-proposal-wide.jpg', alt: 'Wide Central Park proposal scene beside the lake', caption: 'A yes in the middle of New York.', section: 'story', group: 'proposal', objectPosition: 'center 58%', visible: true },
+    { src: 'uploads/story-boat-trip.jpg', alt: 'Couple smiling together on a boat on calm water', caption: 'Somewhere on the water, exactly where we wanted to be.', section: 'story', objectPosition: 'left center', visible: true },
+    { src: 'uploads/story-central-park.jpg', alt: 'Couple standing by the lake in Central Park on a sunny day', caption: 'A favorite kind of New York day.', section: 'story', group: 'newyork', objectPosition: 'center 30%', visible: true },
+    { src: 'uploads/IMG_0929-f1f8c200.jpeg', alt: 'Lisa and Pete smiling closely together indoors', caption: 'Officially, happily, a crown of two.', section: 'story', objectPosition: 'center 30%', visible: true },
+    { src: 'uploads/IMG_1273-a6eb4bb1.jpeg', alt: 'Pete and Lisa in ski gear at a snowy Montana resort', caption: 'Montana adventures with the Sterns.', section: 'story', objectPosition: 'center 30%', visible: true },
+    { src: 'uploads/IMG_9250-3f199009.jpeg', alt: 'Lisa and Pete taking a selfie beneath the blue whale at the American Museum of Natural History', caption: 'Where invisible strings first pulled tight.', section: 'story', objectPosition: 'center 40%', visible: true },
+    { src: 'uploads/IMG_3900-82__darker_natural_color.jpg', alt: 'Lisa jumping into a hug with Pete by the Central Park lake, San Remo towers behind them', caption: 'Central Park, Knicks, Italy — a summer to remember.', section: 'story', objectPosition: 'center center', ratio: '3 / 4', fit: 'contain', visible: true },
+    { src: 'uploads/gallery-palm-hug.jpg', alt: 'Couple hugging on a balcony with palm trees and soft clouds behind them', caption: 'Sunshine, palm trees, and the easiest yes.', section: 'gallery', group: 'travel', objectPosition: 'center 30%', ratio: '3 / 4', visible: true },
+    { src: 'uploads/IMG_8815-6bb25d0f.jpeg', alt: 'Couple smiling together on a pool deck surrounded by trees in the Hamptons', caption: 'Sag Harbor pool days.', section: 'gallery', group: 'travel', objectPosition: 'center 30%', ratio: '3 / 4', visible: true },
+    { src: 'uploads/gallery-garden-path.jpg', alt: 'Couple standing together on a garden path lined with palm trees', caption: 'Garden walks and warm lights.', section: 'gallery', group: 'travel', objectPosition: 'center 30%', ratio: '3 / 4', visible: true },
+    { src: 'uploads/gallery-yankees-selfie.jpg', alt: 'Couple smiling together at a Yankees game', caption: 'Ballpark days.', section: 'gallery', group: 'sports', objectPosition: 'center 40%', visible: true },
+    { src: 'uploads/gallery-us-open.jpg', alt: 'Couple smiling together in stadium seats at the US Open', caption: 'Courtside-ish and very happy about it.', section: 'gallery', group: 'sports', objectPosition: 'center 40%', visible: true },
+    { src: 'uploads/gallery-knicks.jpg', alt: 'Couple smiling at a Knicks game with the arena behind them', caption: 'New York nights, Knicks lights.', section: 'gallery', group: 'sports', objectPosition: 'center 40%', visible: true },
+    { src: 'uploads/gallery-butterfly-garden.jpg', alt: 'Couple smiling in a lush butterfly garden', caption: 'A little green escape.', section: 'gallery', group: 'newyork', objectPosition: 'center 35%', visible: true },
+    { src: 'uploads/gallery-natural-history.jpg', alt: 'Couple taking a selfie in front of the whale at the natural history museum', caption: 'Museum date, whale included.', section: 'gallery', group: 'newyork', objectPosition: 'center 40%', visible: true },
+    { src: 'uploads/gallery-maries-crisis.jpg', alt: "Couple bundled up outside Marie's Crisis Cafe at night", caption: 'A classic New York night out.', section: 'gallery', group: 'newyork', objectPosition: 'center 45%', ratio: '3 / 4', visible: true },
+    { src: 'uploads/family-dinner.jpg', alt: 'Family gathered around a restaurant table', caption: 'Family around the table.', section: 'family', group: 'family', objectPosition: 'center center', visible: false },
+    { src: 'uploads/family-lobby.jpg', alt: 'Family standing together indoors under a patterned ceiling of round lights', caption: 'Family together under the lights.', section: 'family', group: 'family', objectPosition: 'center 55%', visible: false },
+    { src: 'uploads/family-candid-living-room.jpg', alt: 'Large family group laughing while a child jumps through the foreground', caption: 'A perfectly imperfect family photo.', section: 'family', group: 'family', objectPosition: 'center center', visible: false }
+  ];
+
+  // Central editable TBD values
+  tbd = {
+    rsvpLink: '[RSVP LINK TBD]',
+    rsvpDeadline: 'September 1, 2026',
+    roomBlockLink: '[ROOM BLOCK LINK TBD]',
+    roomBlockCutoff: '[CUTOFF DATE TBD]',
+    mapLink: 'https://www.google.com/maps/search/?api=1&query=Il+Bacco+253-24+Northern+Blvd+Little+Neck+NY+11362',
+    dressCode: 'Cocktail attire — festive and put-together, but not black tie.',
+    ceremonyWording: '[CEREMONY WORDING TBD]',
+    weatherBackup: 'The rooftop is enclosed and heated, so it will be lovely rain or shine in November.',
+    parking: 'The restaurant offers complimentary valet parking in the lot directly adjacent to the entrance. There will be an open bar, so please plan accordingly and do not drink and drive.',
+    contact: '[WEDDING CONTACT TBD]',
+    bring: '[ANYTHING TO BRING / KNOW TBD]'
+  };
+
+  find(name) { return this.images.find(i => i.src.indexOf(name) !== -1) || {}; }
+
+  renderVals() {
+    const t = this.state.tab;
+    const set = (tab) => () => { this.setState({ tab, copied: false }); window.scrollTo(0, 0); };
+    const tabs = [
+      ['home', 'Home'], ['story', 'Our Story'], ['venue', 'Il Bacco'], ['details', 'Wedding Details'],
+      ['hotels', 'Hotels'], ['transport', 'Transportation'], ['rsvp', 'RSVP'], ['photos', 'Photos']
+    ];
+    const navItems = tabs.map(([id, label]) => ({
+      label, go: set(id),
+      weight: t === id ? 600 : 400,
+      color: t === id ? '#1d2433' : '#5a6070',
+      underline: t === id ? '#b05f36' : 'transparent'
+    }));
+
+    const boat = this.find('IMG_8815');
+    const crown = this.find('IMG_0929');
+    const montana = this.find('IMG_1273');
+    const whale = this.find('IMG_9250');
+    const parkSpot = this.find('IMG_3900');
+
+    const storyItems = [
+      { date: 'March 2025', title: 'Invisible Strings', body: "Lisa and Pete meet — and, unbeknownst to them, a number of invisible strings already tie their worlds together. Some things are simply meant to find each other.", img: whale.src, imgAlt: whale.alt, imgPos: whale.objectPosition, imgRatio: '3 / 2', imgFit: 'cover', imgCaption: whale.caption },
+      { date: 'May 2025', title: 'The Second Crown', body: 'Pete meets a second Crown, Lindsay, and things become official.', img: crown.src, imgAlt: crown.alt, imgPos: crown.objectPosition, imgRatio: '3 / 2', imgFit: 'cover', imgCaption: crown.caption },
+      { date: 'Summer 2025', title: 'The Shore and the Hamptons', body: "Lisa visits the Shore and Pete visits the Hamptons. Love blooms over summer weekends, family time, and getting folded into each other's worlds.", img: boat.src, imgAlt: boat.alt, imgPos: boat.objectPosition, imgRatio: '3 / 2', imgFit: 'cover', imgCaption: boat.caption },
+      { date: 'Winter 2025/2026', title: 'Families and Adventures', body: 'Lisa comes to Thanksgiving at Garfield Terrace. Pete goes to Mexico and Montana with the Sterns.', img: montana.src, imgAlt: montana.alt, imgPos: montana.objectPosition, imgRatio: '3 / 2', imgFit: 'cover', imgCaption: montana.caption },
+      { date: 'June 2026', title: 'Central Park, Knicks, Italy — a summer to remember', body: 'Pete proposes in Central Park. Soon after, the Knicks win the NBA Championship, and Lisa and Pete head to Italy.', img: parkSpot.src, imgAlt: parkSpot.alt, imgPos: parkSpot.objectPosition, imgRatio: parkSpot.ratio || '3 / 2', imgFit: parkSpot.fit || 'cover', imgCaption: parkSpot.caption },
+      { date: 'November 7, 2026', title: 'The Wedding', body: 'Il Bacco · Little Neck, New York' }
+    ];
+
+    const homeKnicks = this.find('gallery-knicks');
+    const homeBoat = this.find('story-boat-trip');
+    const homePhotos = [homeBoat, homeKnicks].map(p => ({ src: p.src, alt: p.alt, caption: p.caption, objectPosition: p.objectPosition }));
+
+    const venueTiles = [
+      { label: 'Exterior', src: 'uploads/il-bacco-exterior.jpg', alt: 'Il Bacco exterior entrance with awnings and signage on Northern Blvd' },
+      { label: 'Rooftop', src: 'uploads/il-bacco-rooftop.jpg', alt: 'Il Bacco rooftop space with guests gathered and floral arrangements' },
+      { label: 'Dining Floor', src: 'uploads/il-bacco-dining.jpg', alt: 'Il Bacco second-floor dining room set with round tables and chandeliers' }
+    ];
+
+    const schedule = [
+      { time: '5:00 PM', what: 'Suggested arrival', where: '· Il Bacco', address: '253-24 Northern Blvd, Little Neck, NY 11362' },
+      { time: '5:30 PM', what: 'Processional — prompt!', where: '· Floor 3 rooftop' },
+      { time: '6:00–7:00 PM', what: 'Happy hour', where: '' },
+      { time: '7:00–10:00 PM', what: 'Dinner', where: '· Il Bacco Dining Floor 2' },
+      { time: '10:00–11:00 PM', what: 'Afterparty', where: '· Il Bacco rooftop' }
+    ];
+
+    const isTbd = (v) => typeof v === 'string' && v.indexOf('[') === 0;
+    const noteStyle = (v) => isTbd(v) ? { color: '#8a6b3f', font: 'monospace' } : { color: '#454c5c', font: "'Archivo', sans-serif" };
+    const detailNotes = [
+      { label: 'Dress code', value: this.tbd.dressCode },
+      { label: 'Ceremony', value: this.tbd.ceremonyWording },
+      { label: 'Weather & rooftop backup', value: this.tbd.weatherBackup },
+      { label: 'Parking', value: this.tbd.parking },
+      { label: 'Wedding contact', value: this.tbd.contact },
+      { label: 'Good to bring / know', value: this.tbd.bring }
+    ].map(n => ({ ...n, ...noteStyle(n.value) }));
+
+    const byGroup = (g) => this.images.filter(i => i.group === g && i.visible !== false).map(i => ({
+      src: i.src, alt: i.alt, caption: i.caption, objectPosition: i.objectPosition,
+      ratio: i.ratio || '4 / 3', fit: 'cover'
+    }));
+    const proposal = [this.find('story-proposal-wide')]
+      .map(i => ({ src: i.src, alt: i.alt, caption: i.caption, objectPosition: i.objectPosition, ratio: '3 / 2', fit: 'cover' }));
+    const galleryGroups = [
+      { title: 'The Proposal', items: proposal },
+      { title: 'Our New York', items: byGroup('newyork') },
+      { title: 'Travel', items: byGroup('travel') },
+      { title: 'Sports', items: byGroup('sports') },
+      { title: 'Family', items: byGroup('family') }
+    ].filter(g => g.items.length > 0);
+
+    const copyAddress = () => {
+      const addr = 'Il Bacco, 253-24 Northern Blvd, Little Neck, NY 11362';
+      if (navigator.clipboard) navigator.clipboard.writeText(addr);
+      this.setState({ copied: true });
+    };
+
+    return {
+      navItems,
+      isHome: t === 'home', isStory: t === 'story', isVenue: t === 'venue', isDetails: t === 'details',
+      isHotels: t === 'hotels', isTransport: t === 'transport', isRsvp: t === 'rsvp', isPhotos: t === 'photos',
+      goHome: set('home'), goRsvp: set('rsvp'), goDetails: set('details'),
+      homePhotos, storyItems, venueTiles, schedule, detailNotes, galleryGroups,
+      copyAddress, copyLabel: this.state.copied ? 'Copied!' : 'Copy address',
+      rsvpLink: this.tbd.rsvpLink, rsvpDeadline: this.tbd.rsvpDeadline,
+      roomBlockLink: this.tbd.roomBlockLink, roomBlockCutoff: this.tbd.roomBlockCutoff,
+      mapLink: this.tbd.mapLink, parkingNote: this.tbd.parking
+    };
+  }
+}
+</script>
+</body>
+</html>
