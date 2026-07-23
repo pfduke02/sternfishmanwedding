@@ -358,6 +358,28 @@
     </strong></main><strong style="color: #1d2433;">
   </strong></sc-if><strong style="color: #1d2433;">
 
+  <!-- ============ PHOTOS ============ -->
+  <sc-if value="{{ isPhotos }}" hint-placeholder-val="{{ false }}">
+    <main data-screen-label="Photos" style="animation: fadeUp 0.4s ease; max-width: 1160px; margin: 0 auto; padding: 64px 24px 96px; width: 100%; box-sizing: border-box;">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 12px;">Gallery</div>
+        <h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">Photos</h2>
+      </div>
+      <div style="columns: 3 280px; column-gap: 20px;">
+        <sc-for list="{{ galleryPhotos }}" as="ph" hint-placeholder-count="5">
+          <figure style="margin: 0 0 20px; break-inside: avoid;">
+            <div style="position: relative; aspect-ratio: {{ ph.ratio }}; background: #e9e3d3; border-radius: 6px; overflow: hidden;">
+              <sc-if value="{{ ph.src }}" hint-placeholder-val="{{ false }}">
+                <img src="{{ ph.src }}" alt="{{ ph.alt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: {{ ph.objectPosition }};">
+              </sc-if>
+            </div>
+            <figcaption style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: #5a6070; margin-top: 8px; text-align: center;">{{ ph.caption }}</figcaption>
+          </figure>
+        </sc-for>
+      </div>
+    </main>
+  </sc-if>
+
   <!-- ============ FOOTER ============ -->
   <footer style="margin-top: auto; background: #1d2433; color: rgba(246,243,234,0.75); text-align: center; padding: 40px 24px;">
     <div style="font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #f6f3ea; margin-bottom: 8px;">Lisa <span style="font-style: italic; color: #d9a988;">&amp;</span> Pete</div>
@@ -457,6 +479,10 @@ class Component extends DCLogic {
     const homeSummer = this.find('home-summer-yankees');
     const homePhotos = [homeBoat, homeKnicks, homeSummer].map(p => ({ src: p.src, alt: p.alt, caption: p.caption, objectPosition: p.objectPosition }));
 
+    const galleryPhotos = this.images
+      .filter(i => i.section === 'gallery' && i.visible)
+      .map(p => ({ src: p.src, alt: p.alt, caption: p.caption, objectPosition: p.objectPosition, ratio: p.ratio || '4 / 3' }));
+
     const venueTiles = [
       { label: 'Exterior', src: 'uploads/il-bacco-exterior.jpg', alt: 'Il Bacco exterior entrance with awnings and signage on Northern Blvd' },
       { label: 'Rooftop', src: 'uploads/il-bacco-rooftop.jpg', alt: 'Il Bacco rooftop space with guests gathered and floral arrangements' },
@@ -494,9 +520,9 @@ class Component extends DCLogic {
       hamburgerDisplay: this.state.isMobile ? 'flex' : 'none',
       desktopNavDisplay: this.state.isMobile ? 'none' : 'flex',
       isHome: t === 'home', isStory: t === 'story', isVenue: t === 'venue', isDetails: t === 'details',
-      isHotels: t === 'hotels', isTransport: t === 'transport', isRsvp: t === 'rsvp',
+      isHotels: t === 'hotels', isTransport: t === 'transport', isRsvp: t === 'rsvp', isPhotos: t === 'photos',
       goHome: set('home'), goRsvp: set('rsvp'), goDetails: set('details'),
-      homePhotos, storyItems, venueTiles, schedule, detailNotes,
+      homePhotos, storyItems, venueTiles, schedule, detailNotes, galleryPhotos,
       copyAddress, copyLabel: this.state.copied ? 'Copied!' : 'Copy address',
       rsvpLink: this.tbd.rsvpLink, rsvpDeadline: this.tbd.rsvpDeadline,
       roomBlockLink: this.tbd.roomBlockLink, roomBlockCutoff: this.tbd.roomBlockCutoff,
