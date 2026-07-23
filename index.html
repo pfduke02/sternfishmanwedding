@@ -285,20 +285,21 @@
           30 Cutter Mill Road, Great Neck, NY 11021<br>
           <a href="tel:+15167732000" style="color: #a8c6dd;">516-773-2000</a> · <a href="https://www.innatgreatneck.com/" target="_blank" rel="noopener" style="color: #a8c6dd;">innatgreatneck.com</a>
         </div>
-        <div style="margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap;">
-          <div style="font-size: 13.5px; color: rgba(246,243,234,0.75); font-style: italic;">{{ roomBlockNote }}</div>
+        <div style="margin-top: 14px; font-size: 14px; line-height: 1.6; color: rgba(246,243,234,0.9);">Group rate $299 per night for Saturday, November 7 — please book by <strong>October 6, 2026</strong>.</div>
+        <div style="margin-top: 18px;">
+          <a href="{{ roomBlockLink }}" target="_blank" rel="noopener" style="display: inline-block; padding: 11px 20px; background: #b05f36; border-radius: 4px; font-size: 14px; font-weight: 700; color: #f6f3ea; text-decoration: none; letter-spacing: 0.02em;">Book the Group Rate</a>
         </div>
       </div>
 
-      <h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 26px; color: #1d2433;">More options near Fresh Meadows</h3>
-      <p style="margin: 0 0 20px; font-size: 15px; color: #5a6070;">A short drive from Il Bacco.</p>
+      <h3 style="margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 26px; color: #1d2433;">Alternate room block</h3>
+      <p style="margin: 0 0 20px; font-size: 15px; color: #5a6070;">A short drive from Il Bacco, in Fresh Meadows.</p>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
         <div style="background: #ffffff; border: 1px solid rgba(29,36,51,0.12); border-radius: 6px; padding: 24px;">
-          <div style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #b05f36; margin-bottom: 8px;">Room block · Group rate</div>
+          <div style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #b05f36; margin-bottom: 8px;">Alternate block · Group rate</div>
           <div style="font-weight: 600; font-size: 17px; color: #1d2433; margin-bottom: 6px;">Courtyard by Marriott New York Queens/Fresh Meadows</div>
           <div style="font-size: 14px; color: #5a6070; margin-bottom: 12px;">183-15 Horace Harding Expressway, Fresh Meadows, NY 11365</div>
-          <div style="font-size: 14px; line-height: 1.6; color: #454c5c; margin-bottom: 14px;">Group rate $189–$199 per night for Saturday, November 7 — please book by <strong>October 7, 2026</strong>.</div>
-          <a href="{{ courtyardLink }}" target="_blank" rel="noopener" style="display: inline-block; padding: 8px 14px; background: #f6f3ea; border-radius: 4px; font-size: 13px; font-weight: 600; color: #26493a; text-decoration: none;">Book the group rate</a>
+          <div style="font-size: 14px; line-height: 1.6; color: #454c5c; margin-bottom: 14px;">Group rate $189–$199 per night for Saturday, November 7 — please book by <strong>October 6, 2026</strong>.</div>
+          <a href="{{ courtyardLink }}" target="_blank" rel="noopener" style="display: inline-block; padding: 8px 14px; background: #f6f3ea; border-radius: 4px; font-size: 13px; font-weight: 600; color: #26493a; text-decoration: none;">Book the Group Rate</a>
         </div>
       </div>
     </main>
@@ -407,9 +408,9 @@ class Component extends DCLogic {
   tbd = {
     rsvpLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSterOJLMAK1DXxUGGcYiur8J7qIDogHkEm1qsG8IbU7YqWQ/viewform',
     rsvpDeadline: 'September 1, 2026',
-    roomBlockLink: '[ROOM BLOCK LINK TBD]',
+    roomBlockLink: 'https://www.worldhotels.com/content/luxury-hotels/en_US/book/hotel-rooms.33174.html?groupId=6B9DI4B9',
     courtyardLink: 'https://app.marriott.com/resview2?id=1784745965545&key=GRP&app=resvlink',
-    roomBlockCutoff: '[CUTOFF DATE TBD]',
+    roomBlockCutoff: 'October 6, 2026',
     mapLink: 'https://www.google.com/maps/search/?api=1&query=Il+Bacco+253-24+Northern+Blvd+Little+Neck+NY+11362',
     dressCode: 'Cocktail attire — festive and put-together, but not black tie.',
     ceremonyWording: 'Officiated by Cantor Eric Schulmiller of the Reconstructionist Synagogue of the North Shore (RSNS), Lisa\'s childhood temple.',
@@ -499,8 +500,7 @@ class Component extends DCLogic {
       copyAddress, copyLabel: this.state.copied ? 'Copied!' : 'Copy address',
       rsvpLink: this.tbd.rsvpLink, rsvpDeadline: this.tbd.rsvpDeadline,
       roomBlockLink: this.tbd.roomBlockLink, roomBlockCutoff: this.tbd.roomBlockCutoff,
-      mapLink: this.tbd.mapLink, parkingNote: this.tbd.parking, courtyardLink: this.tbd.courtyardLink,
-      roomBlockNote: 'Room block link and booking cutoff coming soon — check back this summer.'
+      mapLink: this.tbd.mapLink, parkingNote: this.tbd.parking, courtyardLink: this.tbd.courtyardLink
     };
   }
 }
