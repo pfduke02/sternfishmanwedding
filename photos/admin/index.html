@@ -56,6 +56,14 @@
   .lb-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
   .abtn { display: flex; align-items: center; justify-content: center; min-height: 44px; border-radius: 6px; font: 600 15px 'Archivo', system-ui, sans-serif; text-decoration: none; cursor: pointer; border: 1px solid rgba(29,36,51,0.25); background: #fff; color: var(--ink); }
   .abtn.primary { background: var(--forest); border-color: var(--forest); color: var(--cream); }
+  .abtn.danger { color: #9b2c1f; border-color: rgba(155,44,31,0.45); }
+  .abtn.danger.armed { background: #9b2c1f; border-color: #9b2c1f; color: #fff; }
+  .abtn:disabled { opacity: 0.6; cursor: default; }
+  .vids { margin-top: 36px; }
+  .vid-list { list-style: none; margin: 10px 0 0; padding: 0; border-top: 1px solid var(--line); }
+  .vid-list li { display: flex; flex-wrap: wrap; gap: 4px 16px; padding: 10px 2px; border-bottom: 1px solid var(--line); font-size: 15px; }
+  .vid-list b { font-weight: 600; min-width: 140px; }
+  .vid-list span { color: var(--muted); }
   .nav { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(251,249,243,0.9); color: var(--ink); font-size: 22px; cursor: pointer; }
   .nav.prev { left: 10px; } .nav.next { right: 10px; }
   .close { position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: rgba(251,249,243,0.9); font-size: 20px; cursor: pointer; }
@@ -82,7 +90,12 @@
   <div class="grid" id="grid"></div>
   <p class="empty" id="empty" hidden>No photos yet.</p>
   <div class="more"><button class="tbtn" id="more" type="button" hidden>Load more</button></div>
-  <p class="note">Photo links on this page expire after two hours; Refresh renews them. Hiding a photo only keeps it out of what we publish later; nothing is deleted.</p>
+  <p class="note">Photo links on this page expire after two hours; Refresh renews them. Hide keeps a photo out of anything we publish later and can be undone. Delete removes it for good.</p>
+  <section id="vids" class="vids" hidden>
+    <div class="eyebrow">Guests with videos</div>
+    <p class="note">They tapped "Have a video?" on the photo page and left a way to reach them. Send them a video link after the wedding.</p>
+    <ul id="vidList" class="vid-list"></ul>
+  </section>
 </main>
 
 <dialog id="lb" aria-label="Photo">
@@ -101,6 +114,7 @@
       <div class="lb-actions">
         <a class="abtn primary" id="lbDownload" href="#" download>Download original</a>
         <button class="abtn" id="lbHide" type="button">Hide</button>
+        <button class="abtn danger" id="lbDelete" type="button">Delete</button>
       </div>
     </div>
   </div>
@@ -137,6 +151,7 @@
   const mb = (n) => (n / 1048576).toFixed(n > 1048576 * 100 ? 0 : 1) + ' MB';
   const when = (iso) => { try { return new Date(iso).toLocaleString('en-US', { timeZone: 'America/New_York', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }); } catch (e) { return iso; } };
   const isHeic = (it) => /heic|heif/i.test(it.type || '') || /\.(heic|heif)$/i.test(it.name || '');
+  const who = (c) => (c && c !== '(no name)') ? c : 'Anonymous';
 
   function stat(label, value) {
     const d = document.createElement('div'); d.className = 'stat';
@@ -158,9 +173,19 @@
     sel.textContent = '';
     const all = document.createElement('option'); all.value = ''; all.textContent = 'Everyone (' + (c.received || 0) + ')'; sel.appendChild(all);
     Object.entries(s.contributors || {}).sort((a, b) => b[1] - a[1]).forEach(([name, n]) => {
-      const o = document.createElement('option'); o.value = name; o.textContent = name + ' (' + n + ')'; sel.appendChild(o);
+      const o = document.createElement('option'); o.value = name; o.textContent = who(name) + ' (' + n + ')'; sel.appendChild(o);
     });
     sel.value = keep;
+    const vids = s.videos || [];
+    $('vids').hidden = vids.length === 0;
+    const list = $('vidList'); list.textContent = '';
+    for (const v of vids) {
+      const li = document.createElement('li');
+      const b = document.createElement('b'); b.textContent = who(v.name);
+      const c = document.createElement('span'); c.textContent = v.contact;
+      const t = document.createElement('span'); t.textContent = when(v.at);
+      li.append(b, c, t); list.appendChild(li);
+    }
   }
 
   async function loadPage(reset) {
@@ -180,12 +205,12 @@
     $('empty').hidden = view.length > 0;
     view.forEach((it, idx) => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'tile' + (it.hidden ? ' is-hidden' : '');
-      b.setAttribute('aria-label', 'Photo from ' + (it.contributor || 'a guest'));
+      b.setAttribute('aria-label', 'Photo from ' + who(it.contributor));
       const src = it.thumbUrl || (!isHeic(it) ? it.url : null);
       if (src) { const img = document.createElement('img'); img.src = src; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async'; b.appendChild(img); }
       else { const ph = document.createElement('div'); ph.className = 'ph'; ph.textContent = it.name; b.appendChild(ph); }
       const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = 'Hidden';
-      const cap = document.createElement('span'); cap.className = 'cap'; cap.textContent = it.contributor || 'Guest';
+      const cap = document.createElement('span'); cap.className = 'cap'; cap.textContent = who(it.contributor);
       b.append(tag, cap);
       b.addEventListener('click', () => open(idx));
       grid.appendChild(b);
@@ -197,8 +222,9 @@
     const it = view[idx]; if (!it) return;
     const img = $('lbImg');
     img.src = isHeic(it) ? (it.thumbUrl || '') : it.url;
-    img.alt = 'Photo from ' + (it.contributor || 'a guest');
-    $('lbWho').textContent = it.contributor || 'Guest';
+    img.alt = 'Photo from ' + who(it.contributor);
+    $('lbWho').textContent = who(it.contributor);
+    disarm();
     $('lbWhen').textContent = when(it.at) + ' · ' + mb(it.bytes || 0);
     $('lbName').textContent = it.name;
     $('lbHeic').hidden = !isHeic(it);
@@ -221,6 +247,30 @@
     catch (e) { alertMsg('Could not update that photo. Try again.'); }
     finally { $('lbHide').disabled = false; }
   });
+  // Delete: first click arms ("Delete for good?"), second click within 5 s deletes.
+  let armTimer = null;
+  function disarm() { clearTimeout(armTimer); const b = $('lbDelete'); b.classList.remove('armed'); b.textContent = 'Delete'; b.disabled = false; }
+  $('lbDelete').addEventListener('click', async () => {
+    const b = $('lbDelete');
+    const it = view[current]; if (!it) return;
+    if (!b.classList.contains('armed')) {
+      b.classList.add('armed'); b.textContent = 'Delete for good?';
+      armTimer = setTimeout(disarm, 5000);
+      return;
+    }
+    clearTimeout(armTimer);
+    b.disabled = true; b.textContent = 'Deleting…';
+    try {
+      await api('delete', { uploadIds: [it.uploadId] });
+      items = items.filter((x) => x.uploadId !== it.uploadId);
+      total = Math.max(0, total - 1); offset = Math.max(0, offset - 1);
+      render();
+      if (view.length) open(Math.min(current, view.length - 1)); else $('lb').close();
+      loadStatus().catch(() => {});
+    } catch (e) { alertMsg('Could not delete that photo. Try again.'); disarm(); }
+  });
+  $('lb').addEventListener('close', disarm);
+
   function alertMsg(t) { const n = document.createElement('p'); n.className = 'note'; n.textContent = t; $('stats').after(n); setTimeout(() => n.remove(), 4000); }
 
   $('who').addEventListener('change', render);

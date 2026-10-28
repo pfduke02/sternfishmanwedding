@@ -47,12 +47,21 @@
   .label em { font-style: normal; font-weight: 400; color: var(--muted); }
   input[type=text] { width: 100%; font: 400 17px 'Archivo', system-ui, sans-serif; color: var(--ink); background: #fff; border: 1px solid rgba(29,36,51,0.25); border-radius: 6px; padding: 13px 14px; }
   input[type=text]:focus { outline: 3px solid rgba(38,73,58,0.25); border-color: var(--forest); }
+  input[type=text]::placeholder { color: rgba(29,36,51,0.36); opacity: 1; }
+  .hint { display: block; margin-top: 7px; font-size: 13px; color: var(--muted); }
   .btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 16px; min-height: 56px; border: 0; border-radius: 6px; background: var(--forest); color: var(--cream); font: 600 18px 'Archivo', system-ui, sans-serif; letter-spacing: 0.01em; cursor: pointer; }
   .btn:hover { background: var(--forest-dark); }
   .btn:active { transform: translateY(1px); }
   .btn:focus-visible { outline: 3px solid rgba(176,95,54,0.45); outline-offset: 2px; }
   .btn svg { width: 22px; height: 22px; }
   .fine { margin: 12px 0 0; text-align: center; font-size: 13px; color: var(--muted); }
+  .linkbtn { display: block; margin: 12px auto 0; padding: 6px 4px; border: 0; background: none; color: var(--forest); font: 500 14px 'Archivo', system-ui, sans-serif; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .linkbtn:hover { color: var(--terracotta); }
+  .vidbox { margin-top: 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .vid-msg { margin: 0 0 12px; font-size: 15px; line-height: 1.45; }
+  .btn-quiet { min-height: 48px; margin-top: 10px; background: transparent; color: var(--forest); border: 1px solid var(--forest); font-size: 16px; }
+  .btn-quiet:hover { background: rgba(38,73,58,0.06); }
+  .btn-quiet:disabled { opacity: 0.6; }
 
   .tray, .mine { margin-top: 32px; }
   .tray-status { margin: 0 0 12px; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; text-align: center; }
@@ -69,8 +78,13 @@
   .tile[data-state=queued] img, .tile[data-state=uploading] img, .tile[data-state=verifying] img { opacity: 0.7; }
   .tile .state { position: absolute; left: 6px; bottom: 6px; display: none; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; background: rgba(251,249,243,0.94); color: var(--ink); }
   .tile .state svg { width: 14px; height: 14px; }
-  .tile[data-state=verifying] .state, .tile[data-state=done] .state { display: inline-flex; }
-  .tile[data-state=done] .state { color: var(--forest); }
+  .tile[data-state=verifying] .state, .tile[data-state=done] .state, .tile[data-state=dup] .state, .tile[data-state=removed] .state { display: inline-flex; }
+  .tile[data-state=done] .state, .tile[data-state=dup] .state { color: var(--forest); }
+  .tile[data-state=dup] img, .tile[data-state=removed] img { opacity: 0.5; }
+  .tile[data-state=removed] .state { color: var(--muted); }
+  .tile .rm { position: absolute; top: 6px; right: 6px; min-width: 32px; height: 32px; padding: 0; border: 0; border-radius: 999px; background: rgba(251,249,243,0.94); color: var(--ink); font: 600 18px/1 'Archivo', system-ui, sans-serif; cursor: pointer; }
+  .tile.confirm .rm { padding: 0 12px; background: var(--terracotta); color: #fff; font-size: 13px; }
+  .tile .rm:disabled { opacity: 0.7; }
   .tile .retry { position: absolute; inset: auto 6px 6px 6px; display: none; min-height: 34px; border: 0; border-radius: 6px; background: var(--terracotta); color: #fff; font: 600 13px 'Archivo', system-ui, sans-serif; cursor: pointer; }
   .tile[data-state=failed] .retry { display: block; }
   .tile .retry[hidden] { display: none !important; }
@@ -105,8 +119,9 @@
 
   <section class="panel" id="panel" aria-label="Choose photos to share">
     <label class="field" for="name">
-      <span class="label">Your name <em>(so we know who to thank)</em></span>
-      <input id="name" type="text" autocomplete="name" maxlength="60" placeholder="e.g. Aunt Carol">
+      <span class="label">Add your name <em>so we know who to thank</em></span>
+      <input id="name" type="text" autocomplete="name" maxlength="60" placeholder="Anonymous" aria-describedby="nameHint">
+      <span class="hint" id="nameHint">Leave it blank to share as Anonymous.</span>
     </label>
     <button id="pick" class="btn" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="15" rx="2"></rect><circle cx="9" cy="11" r="2"></circle><path d="M21 17l-5-5-9 8"></path></svg>
@@ -114,6 +129,14 @@
     </button>
     <input id="file" type="file" accept="image/*" multiple hidden>
     <p class="fine">Pick as many as you like · no app, no sign-in</p>
+    <button id="vidToggle" class="linkbtn" type="button" aria-expanded="false" aria-controls="vidBox">Have a video?</button>
+    <div id="vidBox" class="vidbox" hidden>
+      <p class="vid-msg">We're only taking photos here tonight, but we'd love your videos too. Leave your email or phone number and we'll send you a link to upload them after the wedding.</p>
+      <label class="visually-hidden" for="vidContact">Email or phone number</label>
+      <input id="vidContact" type="text" inputmode="email" autocomplete="email" maxlength="120" placeholder="Email or phone">
+      <button id="vidSend" class="btn btn-quiet" type="button">Send me the link</button>
+      <p id="vidStatus" class="fine" aria-live="polite"></p>
+    </div>
   </section>
 
   <section id="tray" class="tray" hidden>
@@ -155,23 +178,47 @@
   if (!deviceKey || !/^[A-Za-z0-9_-]{16,64}$/.test(deviceKey)) { deviceKey = rid(18); store.set(DKEY, deviceKey); }
 
   const nameEl = $('name');
-  nameEl.value = store.get('lp-photos-name') || '';
-  nameEl.addEventListener('change', () => store.set('lp-photos-name', nameEl.value.trim()));
+  const NAME_KEY = 'lp-photos-guest-name';
+  nameEl.value = store.get(NAME_KEY) || '';
+  const syncHint = () => {
+    $('nameHint').textContent = nameEl.value.trim()
+      ? 'Lisa & Pete will see your name with your photos.'
+      : 'Leave it blank to share as Anonymous.';
+  };
+  syncHint();
+  nameEl.addEventListener('input', () => { store.set(NAME_KEY, nameEl.value.trim()); syncHint(); });
 
   let maxFileBytes = 50 * 1024 * 1024;
   let maxBatch = 5;
   let received = 0, contributors = 0;
 
-  async function api(action, extra) {
-    const res = await fetch(API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(Object.assign({ e: EVENT, action, deviceKey }, extra || {})),
-    });
-    let data = null;
-    try { data = await res.json(); } catch (e) { /* not json */ }
-    if (!res.ok || !data || !data.ok) throw new Error((data && data.error) || ('HTTP ' + res.status));
-    return data;
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  // Every call is safe to repeat, so a busy server (5xx/429) or a dropped connection is
+  // retried a few times with backoff before the caller sees an error.
+  async function api(action, extra, opts) {
+    const tries = (opts && opts.tries) || 5;
+    const okStatus = (opts && opts.okStatus) || [];
+    let last = null;
+    for (let a = 0; a < tries; a++) {
+      if (a) await sleep(Math.min(6000, 600 * Math.pow(2, a - 1)) + Math.random() * 400);
+      let res;
+      try {
+        res = await fetch(API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.assign({ e: EVENT, action, deviceKey }, extra || {})),
+        });
+      } catch (e) { last = new Error('network'); continue; }
+      let data = null;
+      try { data = await res.json(); } catch (e) { /* not json */ }
+      if (res.ok && data && data.ok) return data;
+      if (okStatus.indexOf(res.status) >= 0) return data || { ok: true };
+      const err = new Error((data && data.error) || ('HTTP ' + res.status));
+      err.status = res.status;
+      if (res.status >= 500 || res.status === 429) { last = err; continue; }
+      throw err;
+    }
+    throw last || new Error('network');
   }
 
   // ---------- intro: counts ----------
@@ -210,7 +257,7 @@
     $('mine').hidden = list.length === 0;
     $('mineTitle').textContent = list.length === 1 ? "You've shared 1 photo" : "You've shared " + list.length + ' photos';
     grid.textContent = '';
-    for (const [, it] of list) {
+    for (const [id, it] of list) {
       const fig = document.createElement('figure');
       fig.className = 'tile';
       fig.dataset.state = 'done';
@@ -222,6 +269,29 @@
         const ph = document.createElement('div'); ph.className = 'ph'; ph.textContent = it.name || 'Photo';
         fig.appendChild(ph);
       }
+      // take a photo back: first tap arms, second tap removes it for good
+      const rm = document.createElement('button');
+      rm.type = 'button'; rm.className = 'rm'; rm.textContent = '×';
+      rm.setAttribute('aria-label', 'Remove this photo');
+      let armed = null;
+      rm.addEventListener('click', async () => {
+        if (!fig.classList.contains('confirm')) {
+          fig.classList.add('confirm'); rm.textContent = 'Remove';
+          armed = setTimeout(() => { fig.classList.remove('confirm'); rm.textContent = '×'; }, 4000);
+          return;
+        }
+        clearTimeout(armed);
+        rm.disabled = true; rm.textContent = 'Removing…';
+        try {
+          await api('remove', { uploadId: id }, { okStatus: [404] });
+          mine.delete(id);
+          received = Math.max(0, received - 1); showProof();
+          const t = items.find((i) => i.id === id);
+          if (t) setState(t, 'removed');
+          renderMine();
+        } catch (e) { rm.disabled = false; rm.textContent = 'Try again'; }
+      });
+      fig.appendChild(rm);
       grid.appendChild(fig);
     }
   }
@@ -264,6 +334,15 @@
     } catch (e) { return null; }
   }
 
+  // ---------- fingerprint, so a photo already in the album isn't sent twice ----------
+  async function sha256(file) {
+    try {
+      if (!(window.crypto && crypto.subtle)) return null;
+      const h = await crypto.subtle.digest('SHA-256', await file.arrayBuffer());
+      return Array.from(new Uint8Array(h), (b) => b.toString(16).padStart(2, '0')).join('');
+    } catch (e) { return null; }
+  }
+
   // ---------- the tray ----------
   const items = [];
   const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>';
@@ -278,7 +357,7 @@
     const state = document.createElement('div'); state.className = 'state';
     const why = document.createElement('div'); why.className = 'why';
     const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'retry'; retry.textContent = 'Retry';
-    retry.addEventListener('click', () => { if (it.fatal) return; it.tries = 0; setState(it, 'queued'); uploadLoop(); });
+    retry.addEventListener('click', () => { if (it.fatal) return; clearTimeout(it.timer); it.tries = 0; it.auto = 0; setState(it, 'queued'); uploadLoop(); });
     fig.append(ph, meter, state, why, retry);
     it.parts = { fig, ph, meter: meter.firstChild, state, why, retry };
     return fig;
@@ -296,10 +375,27 @@
     if (state === 'uploading') p.meter.style.width = Math.max(2, Math.round((progress || 0) * 100)) + '%';
     if (state === 'verifying') { p.state.innerHTML = '<span class="spin" aria-hidden="true"></span>'; p.state.append('Checking'); }
     if (state === 'done') { p.state.innerHTML = CHECK; p.state.append('Received'); }
+    if (state === 'dup') { p.state.innerHTML = CHECK; p.state.append('Already shared'); }
+    if (state === 'removed') { p.state.textContent = 'Removed'; }
     if (state === 'failed') { p.why.textContent = it.error || 'Did not upload'; p.retry.hidden = !!it.fatal; }
     updateStatus();
   }
-  function fail(it, msg) { it.error = msg; setState(it, 'failed'); }
+  // Connection trouble and busy-server errors retry on their own (4 s, 12 s, 30 s);
+  // anything else waits for the Retry button.
+  const AUTO_RETRY = [4000, 12000, 30000];
+  const transient = (e) => (e && e.status >= 500) ||
+    /network|timeout|stalled|Failed to fetch|Load failed|HTTP 5\d\d|HTTP 429|could not sign|never arrived|size mismatch/i.test(String((e && e.message) || e || ''));
+  function fail(it, msg, retryable) {
+    it.error = msg; setState(it, 'failed');
+    clearTimeout(it.timer);
+    if (retryable && !it.fatal && (it.auto || 0) < AUTO_RETRY.length) {
+      const wait = AUTO_RETRY[it.auto || 0];
+      it.auto = (it.auto || 0) + 1;
+      it.parts.why.textContent = msg + ' · trying again';
+      it.timer = setTimeout(() => { if (it.state === 'failed') { setState(it, 'queued'); uploadLoop(); } }, wait);
+    }
+  }
+  function dup(it) { setState(it, 'dup'); }
   function done(it) {
     setState(it, 'done');
     if (!mine.has(it.id)) { received += 1; showProof(); }
@@ -307,15 +403,19 @@
     renderMine();
   }
   function updateStatus() {
-    const counted = items.filter((i) => !i.fatal);
+    const counted = items.filter((i) => !i.fatal && i.state !== 'dup' && i.state !== 'removed');
     const total = counted.length;
     const ok = items.filter((i) => i.state === 'done').length;
     const bad = items.filter((i) => i.state === 'failed').length;
+    const dups = items.filter((i) => i.state === 'dup').length;
     const working = items.some(busy);
+    const dupNote = dups ? ' · ' + dups + ' already shared' : '';
     let t;
     if (working) t = 'Sending… ' + ok + ' of ' + total + ' received';
     else if (bad) t = ok + ' of ' + total + ' received · ' + bad + (bad === 1 ? ' needs' : ' need') + ' a retry';
-    else t = ok === 1 ? 'Your photo was received — thank you!' : 'All ' + ok + ' received — thank you!';
+    else if (!total && dups) t = (dups === 1 ? 'That photo was' : 'Those photos were') + ' already shared — thank you!';
+    else if (!total) t = 'Nothing left to send.';
+    else t = (ok === 1 ? 'Your photo was received' : 'All ' + ok + ' received') + dupNote + ' — thank you!';
     $('trayStatus').textContent = t;
     $('keepOpen').hidden = !working;
   }
@@ -327,7 +427,10 @@
                    state: 'queued', thumbDone: false, thumbBlob: null, thumbUrl: null, tries: 0, fatal: false };
       $('trayGrid').appendChild(makeTile(it));
       items.push(it);
-      if (!/^image\//.test(it.type) && !/\.(jpe?g|png|heic|heif|webp|gif)$/i.test(it.name)) {
+      if (/^video\//.test(it.type) || /\.(mov|mp4|m4v|hevc|avi|3gp)$/i.test(it.name)) {
+        it.fatal = true; it.thumbDone = true; it.parts.ph.textContent = it.name;
+        fail(it, 'Videos: see "Have a video?"'); openVideoBox();
+      } else if (!/^image\//.test(it.type) && !/\.(jpe?g|png|heic|heif|webp|gif)$/i.test(it.name)) {
         it.fatal = true; it.thumbDone = true; it.parts.ph.textContent = it.name; fail(it, 'Not a photo');
       } else if (f.size > maxFileBytes) {
         it.fatal = true; it.thumbDone = true; it.parts.ph.textContent = it.name;
@@ -347,9 +450,13 @@
         const it = items.find((i) => !i.thumbDone);
         if (!it) break;
         const t = await makeThumb(it.file);
+        it.sha = await sha256(it.file);
         it.thumbDone = true;
         if (t) { it.thumbBlob = t.blob; it.thumbUrl = t.url; }
         setImage(it);
+        // the same photo picked twice on this phone: send it once
+        const twin = it.sha && items.find((o) => o !== it && o.sha === it.sha && !o.fatal && o.state !== 'removed');
+        if (twin && it.state === 'queued') dup(it);
         uploadLoop();
       }
     } finally { thumbBusy = false; }
@@ -372,15 +479,21 @@
     }
   }
 
+  // PUT straight to storage. A connection that stops moving for 45 s is dropped and
+  // retried, instead of hanging until the 10-minute timeout.
   function putFile(url, blob, type, onProgress) {
     return new Promise((resolve, reject) => {
       const x = new XMLHttpRequest();
+      let last = Date.now();
+      const dog = setInterval(() => { if (Date.now() - last > 45000) { x.abort(); } }, 5000);
+      const end = (fn) => (arg) => { clearInterval(dog); fn(arg); };
       x.open('PUT', url);
       x.setRequestHeader('Content-Type', type || 'application/octet-stream');
-      if (onProgress) x.upload.onprogress = (e) => { if (e.lengthComputable) onProgress(e.loaded / e.total); };
-      x.onload = () => (x.status >= 200 && x.status < 300) ? resolve() : reject(new Error('HTTP ' + x.status));
-      x.onerror = () => reject(new Error('network'));
-      x.ontimeout = () => reject(new Error('timeout'));
+      x.upload.onprogress = (e) => { last = Date.now(); if (onProgress && e.lengthComputable) onProgress(e.loaded / e.total); };
+      x.onload = end(() => (x.status >= 200 && x.status < 300) ? resolve() : reject(new Error('HTTP ' + x.status)));
+      x.onerror = end(() => reject(new Error('network')));
+      x.ontimeout = end(() => reject(new Error('timeout')));
+      x.onabort = end(() => reject(new Error('stalled')));
       x.timeout = 10 * 60 * 1000;
       x.send(blob);
     });
@@ -394,7 +507,8 @@
     const m = String((e && e.message) || e || '');
     if (/closed/i.test(m)) return 'Photo sharing is closed';
     if (/full/i.test(m)) return 'Storage is full — please tell Lisa & Pete';
-    if (/network|timeout|Failed to fetch|Load failed/i.test(m)) return 'Connection dropped';
+    if (/network|timeout|stalled|Failed to fetch|Load failed/i.test(m)) return 'Connection dropped';
+    if (/HTTP 5\d\d|HTTP 429/i.test(m)) return 'Server busy';
     return 'Did not upload';
   };
 
@@ -404,18 +518,20 @@
     try {
       intent = await api('intent', {
         contributor: nameEl.value.trim() || undefined,
-        uploads: batch.map((i) => ({ uploadId: i.id, name: i.name, type: i.type, size: i.size, thumb: !!i.thumbBlob })),
+        uploads: batch.map((i) => ({ uploadId: i.id, name: i.name, type: i.type, size: i.size,
+                                     thumb: !!i.thumbBlob, sha256: i.sha || undefined })),
       });
     } catch (e) {
-      batch.forEach((i) => fail(i, friendly(e)));
+      batch.forEach((i) => fail(i, friendly(e), transient(e)));
       if (/closed/i.test(String(e && e.message))) closed();
       return;
     }
     const byId = new Map((intent.uploads || []).map((u) => [u.uploadId, u]));
     const work = batch.filter((i) => {
       const u = byId.get(i.id);
-      if (!u || !u.ok) { fail(i, (u && u.reason) || 'Could not start'); return false; }
+      if (!u || !u.ok) { const r = (u && u.reason) || 'Could not start'; fail(i, r, transient(r)); return false; }
       if (u.alreadyReceived) { done(i); return false; }
+      if (u.duplicate) { dup(i); return false; }
       i.put = u; return true;
     });
     await pool(work, CONCURRENCY, async (i) => {
@@ -423,7 +539,7 @@
         await putFile(i.put.url, i.file, i.type, (p) => setState(i, 'uploading', p));
         if (i.thumbBlob && i.put.thumbUrl) { try { await putFile(i.put.thumbUrl, i.thumbBlob, 'image/jpeg'); } catch (e) { /* optional */ } }
         setState(i, 'verifying');
-      } catch (e) { fail(i, friendly(e)); }
+      } catch (e) { fail(i, friendly(e), transient(e)); }
     });
     const check = batch.filter((i) => i.state === 'verifying');
     if (!check.length) return;
@@ -432,9 +548,9 @@
       const res = new Map((c.files || []).map((f) => [f.uploadId, f]));
       for (const i of check) {
         const f = res.get(i.id);
-        if (f && f.ok) done(i); else fail(i, (f && f.reason) || 'Not received');
+        if (f && f.ok) done(i); else { const r = (f && f.reason) || 'Not received'; fail(i, r, transient(r)); }
       }
-    } catch (e) { check.forEach((i) => fail(i, friendly(e))); }
+    } catch (e) { check.forEach((i) => fail(i, friendly(e), transient(e))); }
   }
 
   // ---------- keep the phone awake, recover after a lock ----------
@@ -451,11 +567,34 @@
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState !== 'visible') return;
     let again = false;
-    for (const i of items) if (i.state === 'failed' && !i.fatal && i.tries < 2) { i.tries += 1; setState(i, 'queued'); again = true; }
+    for (const i of items) if (i.state === 'failed' && !i.fatal && i.tries < 2) { clearTimeout(i.timer); i.tries += 1; setState(i, 'queued'); again = true; }
     if (items.some(busy)) acquireWake();
     if (again) uploadLoop();
   });
   window.addEventListener('beforeunload', (e) => { if (items.some(busy)) { e.preventDefault(); e.returnValue = ''; } });
+
+  // ---------- videos: photos only tonight, but we want them ----------
+  function openVideoBox() { $('vidBox').hidden = false; $('vidToggle').setAttribute('aria-expanded', 'true'); }
+  $('vidToggle').addEventListener('click', () => {
+    const show = $('vidBox').hidden;
+    $('vidBox').hidden = !show;
+    $('vidToggle').setAttribute('aria-expanded', String(show));
+    if (show) $('vidContact').focus();
+  });
+  $('vidSend').addEventListener('click', async () => {
+    const contact = $('vidContact').value.trim();
+    if (!(/@/.test(contact) || contact.replace(/\D/g, '').length >= 7)) {
+      $('vidStatus').textContent = 'Please enter an email or phone number.'; return;
+    }
+    $('vidSend').disabled = true; $('vidStatus').textContent = 'Sending…';
+    try {
+      await api('video_interest', { contact, name: nameEl.value.trim() || undefined });
+      $('vidStatus').textContent = "Thanks! We'll send you a link for your videos after the wedding.";
+      $('vidContact').value = '';
+    } catch (e) {
+      $('vidStatus').textContent = 'Could not send that. Check your connection and try again.';
+    } finally { $('vidSend').disabled = false; }
+  });
 
   $('pick').addEventListener('click', () => $('file').click());
   $('file').addEventListener('change', (ev) => {
