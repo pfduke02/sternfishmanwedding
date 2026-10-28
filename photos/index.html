@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Share your photos — Lisa &amp; Pete</title>
+<meta name="description" content="Share your favorite photos from Lisa &amp; Pete's wedding.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#f6f3ea">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://hseupjbneifqxaykxltt.supabase.co" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Archivo:wght@400;500;600&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f6f3ea; --paper: #fbf9f3; --ink: #1d2433; --muted: rgba(29,36,51,0.72);
+    --terracotta: #b05f36; --forest: #26493a; --forest-dark: #1c372b; --line: rgba(29,36,51,0.14);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); font-family: 'Archivo', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: var(--forest); }
+  a:hover { color: var(--terracotta); }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  header { border-bottom: 1px solid var(--line); }
+  .bar { max-width: 1160px; margin: 0 auto; padding: 14px 24px; }
+  .logo { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; letter-spacing: 0.04em; color: var(--ink); text-decoration: none; }
+  .logo span { color: var(--terracotta); font-style: italic; }
+
+  main { max-width: 640px; margin: 0 auto; padding: 48px 20px 80px; padding-bottom: max(80px, env(safe-area-inset-bottom)); animation: fadeUp 0.4s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  .hero { text-align: center; }
+  .eyebrow { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 600; letter-spacing: 0.32em; text-transform: uppercase; color: var(--terracotta); }
+  .names { margin: 10px 0 6px; font-family: 'Pinyon Script', 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(48px, 13vw, 68px); line-height: 1.1; color: var(--ink); }
+  .rule { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 2px 0 12px; }
+  .rule span { width: 56px; height: 1px; background: rgba(29,36,51,0.35); }
+  .rule i { width: 4px; height: 4px; border-radius: 50%; background: rgba(29,36,51,0.55); }
+  .date { margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+  .lead { margin: 22px auto 6px; max-width: 440px; font-family: 'Cormorant Garamond', serif; font-size: 25px; line-height: 1.3; font-weight: 500; text-wrap: balance; }
+  .proof { margin: 0; font-size: 14px; color: var(--muted); min-height: 20px; }
+
+  .panel { margin: 28px 0 0; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 22px; }
+  .field { display: block; }
+  .label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+  .label em { font-style: normal; font-weight: 400; color: var(--muted); }
+  input[type=text] { width: 100%; font: 400 17px 'Archivo', system-ui, sans-serif; color: var(--ink); background: #fff; border: 1px solid rgba(29,36,51,0.25); border-radius: 6px; padding: 13px 14px; }
+  input[type=text]:focus { outline: 3px solid rgba(38,73,58,0.25); border-color: var(--forest); }
+  .btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 16px; min-height: 56px; border: 0; border-radius: 6px; background: var(--forest); color: var(--cream); font: 600 18px 'Archivo', system-ui, sans-serif; letter-spacing: 0.01em; cursor: pointer; }
+  .btn:hover { background: var(--forest-dark); }
+  .btn:active { transform: translateY(1px); }
+  .btn:focus-visible { outline: 3px solid rgba(176,95,54,0.45); outline-offset: 2px; }
+  .btn svg { width: 22px; height: 22px; }
+  .fine { margin: 12px 0 0; text-align: center; font-size: 13px; color: var(--muted); }
+
+  .tray, .mine { margin-top: 32px; }
+  .tray-status { margin: 0 0 12px; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; text-align: center; }
+  .mine-title { margin: 0 0 12px; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--terracotta); }
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  @media (min-width: 560px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+  .tile { position: relative; margin: 0; aspect-ratio: 1 / 1; border-radius: 6px; overflow: hidden; background: #e9e3d3; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile .ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 8px; text-align: center; font-size: 11px; color: var(--muted); word-break: break-all; }
+  .tile .meter { position: absolute; left: 8px; right: 8px; bottom: 8px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.65); overflow: hidden; display: none; }
+  .tile .meter span { display: block; height: 100%; width: 0; background: var(--forest); transition: width 0.2s ease; }
+  .tile[data-state=uploading] .meter, .tile[data-state=queued] .meter { display: block; }
+  .tile[data-state=queued] img, .tile[data-state=uploading] img, .tile[data-state=verifying] img { opacity: 0.7; }
+  .tile .state { position: absolute; left: 6px; bottom: 6px; display: none; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; background: rgba(251,249,243,0.94); color: var(--ink); }
+  .tile .state svg { width: 14px; height: 14px; }
+  .tile[data-state=verifying] .state, .tile[data-state=done] .state { display: inline-flex; }
+  .tile[data-state=done] .state { color: var(--forest); }
+  .tile .retry { position: absolute; inset: auto 6px 6px 6px; display: none; min-height: 34px; border: 0; border-radius: 6px; background: var(--terracotta); color: #fff; font: 600 13px 'Archivo', system-ui, sans-serif; cursor: pointer; }
+  .tile[data-state=failed] .retry { display: block; }
+  .tile .retry[hidden] { display: none !important; }
+  .tile[data-state=failed] img { opacity: 0.45; }
+  .tile .why { position: absolute; top: 6px; left: 6px; right: 6px; display: none; padding: 3px 6px; border-radius: 4px; font-size: 11px; background: rgba(251,249,243,0.94); color: var(--terracotta); }
+  .tile[data-state=failed] .why { display: block; }
+  .spin { width: 12px; height: 12px; border: 2px solid rgba(29,36,51,0.25); border-top-color: var(--ink); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .privacy { margin: 40px 0 0; text-align: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 19px; color: rgba(29,36,51,0.62); }
+  .closed { text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 22px; }
+
+  @media (prefers-reduced-motion: reduce) { main { animation: none; } .spin { animation-duration: 2s; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a class="logo" href="/" aria-label="Lisa &amp; Pete — wedding home">L <span>&amp;</span> P</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">Share your photos</div>
+    <h1 class="names">Lisa &amp; Pete</h1>
+    <div class="rule" aria-hidden="true"><span></span><i></i><span></span></div>
+    <p class="date">November 7, 2026 · Il Bacco</p>
+    <p class="lead">We'd love your favorite photos from tonight.</p>
+    <p class="proof" id="proof" aria-live="polite"></p>
+  </section>
+
+  <section class="panel" id="panel" aria-label="Choose photos to share">
+    <label class="field" for="name">
+      <span class="label">Your name <em>(so we know who to thank)</em></span>
+      <input id="name" type="text" autocomplete="name" maxlength="60" placeholder="e.g. Aunt Carol">
+    </label>
+    <button id="pick" class="btn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="15" rx="2"></rect><circle cx="9" cy="11" r="2"></circle><path d="M21 17l-5-5-9 8"></path></svg>
+      Choose photos
+    </button>
+    <input id="file" type="file" accept="image/*" multiple hidden>
+    <p class="fine">Pick as many as you like · no app, no sign-in</p>
+  </section>
+
+  <section id="tray" class="tray" hidden>
+    <p id="trayStatus" class="tray-status" aria-live="polite"></p>
+    <div id="trayGrid" class="grid"></div>
+    <p id="keepOpen" class="fine">Keep this page open until each photo says Received.</p>
+  </section>
+
+  <section id="mine" class="mine" hidden>
+    <h2 id="mineTitle" class="mine-title">Your photos</h2>
+    <div id="mineGrid" class="grid"></div>
+  </section>
+
+  <p class="privacy">Only Lisa &amp; Pete can see the photos you share.</p>
+</main>
+
+<script>
+(() => {
+  'use strict';
+  const API = 'https://hseupjbneifqxaykxltt.supabase.co/functions/v1/api';
+  const DEFAULT_EVENT = 'bf4d479a7b1c16d5b088ede0';
+  const CONCURRENCY = 2;
+  const qs = new URLSearchParams(location.search);
+  const EVENT = /^[a-f0-9]{16,64}$/.test(qs.get('e') || '') ? qs.get('e') : DEFAULT_EVENT;
+  const $ = (id) => document.getElementById(id);
+
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* private mode: fine */ } },
+  };
+  const rid = (n) => {
+    const a = new Uint8Array(n); crypto.getRandomValues(a);
+    let s = ''; for (const b of a) s += String.fromCharCode(b);
+    return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  };
+
+  const DKEY = 'lp-photos-device-' + EVENT.slice(0, 8);
+  let deviceKey = store.get(DKEY);
+  if (!deviceKey || !/^[A-Za-z0-9_-]{16,64}$/.test(deviceKey)) { deviceKey = rid(18); store.set(DKEY, deviceKey); }
+
+  const nameEl = $('name');
+  nameEl.value = store.get('lp-photos-name') || '';
+  nameEl.addEventListener('change', () => store.set('lp-photos-name', nameEl.value.trim()));
+
+  let maxFileBytes = 50 * 1024 * 1024;
+  let maxBatch = 5;
+  let received = 0, contributors = 0;
+
+  async function api(action, extra) {
+    const res = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.assign({ e: EVENT, action, deviceKey }, extra || {})),
+    });
+    let data = null;
+    try { data = await res.json(); } catch (e) { /* not json */ }
+    if (!res.ok || !data || !data.ok) throw new Error((data && data.error) || ('HTTP ' + res.status));
+    return data;
+  }
+
+  // ---------- intro: counts ----------
+  function showProof() {
+    const p = $('proof');
+    if (!received) { p.textContent = 'Be the first to share a photo.'; return; }
+    p.textContent = received + (received === 1 ? ' photo' : ' photos') + ' shared so far' +
+      (contributors ? ' by ' + contributors + (contributors === 1 ? ' guest' : ' guests') : '');
+  }
+  function closed() {
+    const panel = $('panel');
+    panel.textContent = '';
+    const msg = document.createElement('p');
+    msg.className = 'closed';
+    msg.textContent = 'Photo sharing has closed. Thank you for everything you sent!';
+    panel.appendChild(msg);
+  }
+  async function hello() {
+    try {
+      const h = await api('hello');
+      if (h.maxFileBytes) maxFileBytes = h.maxFileBytes;
+      if (h.maxBatch) maxBatch = Math.max(1, Math.min(5, h.maxBatch));
+      received = h.received || 0; contributors = h.contributors || 0;
+      showProof();
+      if (!h.windowOpen) closed();
+    } catch (e) {
+      $('proof').textContent = 'Having trouble connecting — check your signal and try again.';
+    }
+  }
+
+  // ---------- your photos (server-verified, survives reloads) ----------
+  const mine = new Map();   // uploadId -> { thumb, name, at }
+  function renderMine() {
+    const grid = $('mineGrid');
+    const list = Array.from(mine.entries()).sort((a, b) => String(b[1].at).localeCompare(String(a[1].at)));
+    $('mine').hidden = list.length === 0;
+    $('mineTitle').textContent = list.length === 1 ? "You've shared 1 photo" : "You've shared " + list.length + ' photos';
+    grid.textContent = '';
+    for (const [, it] of list) {
+      const fig = document.createElement('figure');
+      fig.className = 'tile';
+      fig.dataset.state = 'done';
+      if (it.thumb) {
+        const img = document.createElement('img');
+        img.src = it.thumb; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async';
+        fig.appendChild(img);
+      } else {
+        const ph = document.createElement('div'); ph.className = 'ph'; ph.textContent = it.name || 'Photo';
+        fig.appendChild(ph);
+      }
+      grid.appendChild(fig);
+    }
+  }
+  async function loadMine() {
+    try {
+      const m = await api('mine');
+      for (const it of m.items || []) {
+        const prev = mine.get(it.uploadId);
+        mine.set(it.uploadId, { thumb: (prev && prev.thumb) || it.thumbUrl, name: it.name, at: it.at });
+      }
+      renderMine();
+    } catch (e) { /* the list is a convenience; uploads still work */ }
+  }
+
+  // ---------- thumbnails, made on the phone ----------
+  async function makeThumb(file, max) {
+    max = max || 480;
+    try {
+      let src = null, w = 0, h = 0, bmp = null, url = null;
+      if (window.createImageBitmap) {
+        try { bmp = await createImageBitmap(file, { imageOrientation: 'from-image' }); } catch (e) { bmp = null; }
+      }
+      if (bmp) { src = bmp; w = bmp.width; h = bmp.height; }
+      else {
+        url = URL.createObjectURL(file);
+        const img = await new Promise((resolve, reject) => {
+          const i = new Image(); i.onload = () => resolve(i); i.onerror = reject; i.src = url;
+        });
+        src = img; w = img.naturalWidth; h = img.naturalHeight;
+      }
+      if (!w || !h) return null;
+      const s = Math.min(1, max / Math.max(w, h));
+      const c = document.createElement('canvas');
+      c.width = Math.max(1, Math.round(w * s)); c.height = Math.max(1, Math.round(h * s));
+      c.getContext('2d').drawImage(src, 0, 0, c.width, c.height);
+      if (bmp && bmp.close) bmp.close();
+      if (url) URL.revokeObjectURL(url);
+      const blob = await new Promise((r) => c.toBlob(r, 'image/jpeg', 0.8));
+      return blob ? { blob, url: URL.createObjectURL(blob) } : null;
+    } catch (e) { return null; }
+  }
+
+  // ---------- the tray ----------
+  const items = [];
+  const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>';
+  const busy = (i) => i.state === 'queued' || i.state === 'uploading' || i.state === 'verifying';
+
+  function makeTile(it) {
+    const fig = document.createElement('figure');
+    fig.className = 'tile';
+    fig.setAttribute('aria-label', it.name);
+    const ph = document.createElement('div'); ph.className = 'ph';
+    const meter = document.createElement('div'); meter.className = 'meter'; meter.appendChild(document.createElement('span'));
+    const state = document.createElement('div'); state.className = 'state';
+    const why = document.createElement('div'); why.className = 'why';
+    const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'retry'; retry.textContent = 'Retry';
+    retry.addEventListener('click', () => { if (it.fatal) return; it.tries = 0; setState(it, 'queued'); uploadLoop(); });
+    fig.append(ph, meter, state, why, retry);
+    it.parts = { fig, ph, meter: meter.firstChild, state, why, retry };
+    return fig;
+  }
+  function setImage(it) {
+    if (!it.thumbUrl) { it.parts.ph.textContent = it.name; return; }
+    const img = document.createElement('img'); img.src = it.thumbUrl; img.alt = '';
+    it.parts.fig.insertBefore(img, it.parts.ph);
+  }
+  function setState(it, state, progress) {
+    it.state = state;
+    const p = it.parts;
+    p.fig.dataset.state = state;
+    if (state === 'queued') p.meter.style.width = '2%';
+    if (state === 'uploading') p.meter.style.width = Math.max(2, Math.round((progress || 0) * 100)) + '%';
+    if (state === 'verifying') { p.state.innerHTML = '<span class="spin" aria-hidden="true"></span>'; p.state.append('Checking'); }
+    if (state === 'done') { p.state.innerHTML = CHECK; p.state.append('Received'); }
+    if (state === 'failed') { p.why.textContent = it.error || 'Did not upload'; p.retry.hidden = !!it.fatal; }
+    updateStatus();
+  }
+  function fail(it, msg) { it.error = msg; setState(it, 'failed'); }
+  function done(it) {
+    setState(it, 'done');
+    if (!mine.has(it.id)) { received += 1; showProof(); }
+    mine.set(it.id, { thumb: it.thumbUrl, name: it.name, at: new Date().toISOString() });
+    renderMine();
+  }
+  function updateStatus() {
+    const counted = items.filter((i) => !i.fatal);
+    const total = counted.length;
+    const ok = items.filter((i) => i.state === 'done').length;
+    const bad = items.filter((i) => i.state === 'failed').length;
+    const working = items.some(busy);
+    let t;
+    if (working) t = 'Sending… ' + ok + ' of ' + total + ' received';
+    else if (bad) t = ok + ' of ' + total + ' received · ' + bad + (bad === 1 ? ' needs' : ' need') + ' a retry';
+    else t = ok === 1 ? 'Your photo was received — thank you!' : 'All ' + ok + ' received — thank you!';
+    $('trayStatus').textContent = t;
+    $('keepOpen').hidden = !working;
+  }
+
+  function addFiles(files) {
+    $('tray').hidden = false;
+    for (const f of files) {
+      const it = { id: rid(12), file: f, name: f.name || 'photo.jpg', type: f.type || '', size: f.size,
+                   state: 'queued', thumbDone: false, thumbBlob: null, thumbUrl: null, tries: 0, fatal: false };
+      $('trayGrid').appendChild(makeTile(it));
+      items.push(it);
+      if (!/^image\//.test(it.type) && !/\.(jpe?g|png|heic|heif|webp|gif)$/i.test(it.name)) {
+        it.fatal = true; it.thumbDone = true; it.parts.ph.textContent = it.name; fail(it, 'Not a photo');
+      } else if (f.size > maxFileBytes) {
+        it.fatal = true; it.thumbDone = true; it.parts.ph.textContent = it.name;
+        fail(it, 'Too large (max ' + Math.round(maxFileBytes / 1048576) + ' MB)');
+      } else setState(it, 'queued');
+    }
+    acquireWake();
+    thumbLoop();
+  }
+
+  let thumbBusy = false;
+  async function thumbLoop() {
+    if (thumbBusy) return;
+    thumbBusy = true;
+    try {
+      for (;;) {
+        const it = items.find((i) => !i.thumbDone);
+        if (!it) break;
+        const t = await makeThumb(it.file);
+        it.thumbDone = true;
+        if (t) { it.thumbBlob = t.blob; it.thumbUrl = t.url; }
+        setImage(it);
+        uploadLoop();
+      }
+    } finally { thumbBusy = false; }
+  }
+
+  let upBusy = false;
+  async function uploadLoop() {
+    if (upBusy) return;
+    upBusy = true;
+    try {
+      for (;;) {
+        const ready = items.filter((i) => i.state === 'queued' && i.thumbDone).slice(0, maxBatch);
+        if (!ready.length) break;
+        await runBatch(ready);
+      }
+    } finally {
+      upBusy = false;
+      updateStatus();
+      if (!items.some(busy)) releaseWake();
+    }
+  }
+
+  function putFile(url, blob, type, onProgress) {
+    return new Promise((resolve, reject) => {
+      const x = new XMLHttpRequest();
+      x.open('PUT', url);
+      x.setRequestHeader('Content-Type', type || 'application/octet-stream');
+      if (onProgress) x.upload.onprogress = (e) => { if (e.lengthComputable) onProgress(e.loaded / e.total); };
+      x.onload = () => (x.status >= 200 && x.status < 300) ? resolve() : reject(new Error('HTTP ' + x.status));
+      x.onerror = () => reject(new Error('network'));
+      x.ontimeout = () => reject(new Error('timeout'));
+      x.timeout = 10 * 60 * 1000;
+      x.send(blob);
+    });
+  }
+  async function pool(list, n, fn) {
+    let next = 0;
+    const worker = async () => { while (next < list.length) { const it = list[next++]; await fn(it); } };
+    await Promise.all(Array.from({ length: Math.min(n, list.length) }, worker));
+  }
+  const friendly = (e) => {
+    const m = String((e && e.message) || e || '');
+    if (/closed/i.test(m)) return 'Photo sharing is closed';
+    if (/full/i.test(m)) return 'Storage is full — please tell Lisa & Pete';
+    if (/network|timeout|Failed to fetch|Load failed/i.test(m)) return 'Connection dropped';
+    return 'Did not upload';
+  };
+
+  async function runBatch(batch) {
+    batch.forEach((i) => setState(i, 'uploading', 0));
+    let intent;
+    try {
+      intent = await api('intent', {
+        contributor: nameEl.value.trim() || undefined,
+        uploads: batch.map((i) => ({ uploadId: i.id, name: i.name, type: i.type, size: i.size, thumb: !!i.thumbBlob })),
+      });
+    } catch (e) {
+      batch.forEach((i) => fail(i, friendly(e)));
+      if (/closed/i.test(String(e && e.message))) closed();
+      return;
+    }
+    const byId = new Map((intent.uploads || []).map((u) => [u.uploadId, u]));
+    const work = batch.filter((i) => {
+      const u = byId.get(i.id);
+      if (!u || !u.ok) { fail(i, (u && u.reason) || 'Could not start'); return false; }
+      if (u.alreadyReceived) { done(i); return false; }
+      i.put = u; return true;
+    });
+    await pool(work, CONCURRENCY, async (i) => {
+      try {
+        await putFile(i.put.url, i.file, i.type, (p) => setState(i, 'uploading', p));
+        if (i.thumbBlob && i.put.thumbUrl) { try { await putFile(i.put.thumbUrl, i.thumbBlob, 'image/jpeg'); } catch (e) { /* optional */ } }
+        setState(i, 'verifying');
+      } catch (e) { fail(i, friendly(e)); }
+    });
+    const check = batch.filter((i) => i.state === 'verifying');
+    if (!check.length) return;
+    try {
+      const c = await api('complete', { uploadIds: check.map((i) => i.id) });
+      const res = new Map((c.files || []).map((f) => [f.uploadId, f]));
+      for (const i of check) {
+        const f = res.get(i.id);
+        if (f && f.ok) done(i); else fail(i, (f && f.reason) || 'Not received');
+      }
+    } catch (e) { check.forEach((i) => fail(i, friendly(e))); }
+  }
+
+  // ---------- keep the phone awake, recover after a lock ----------
+  let wake = null;
+  async function acquireWake() {
+    try {
+      if ('wakeLock' in navigator && !wake) {
+        wake = await navigator.wakeLock.request('screen');
+        wake.addEventListener('release', () => { wake = null; });
+      }
+    } catch (e) { /* not supported: fine */ }
+  }
+  function releaseWake() { if (wake) { wake.release().catch(() => {}); wake = null; } }
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible') return;
+    let again = false;
+    for (const i of items) if (i.state === 'failed' && !i.fatal && i.tries < 2) { i.tries += 1; setState(i, 'queued'); again = true; }
+    if (items.some(busy)) acquireWake();
+    if (again) uploadLoop();
+  });
+  window.addEventListener('beforeunload', (e) => { if (items.some(busy)) { e.preventDefault(); e.returnValue = ''; } });
+
+  $('pick').addEventListener('click', () => $('file').click());
+  $('file').addEventListener('change', (ev) => {
+    const files = Array.from(ev.target.files || []);
+    ev.target.value = '';
+    if (files.length) addFiles(files);
+  });
+
+  hello();
+  loadMine();
+})();
+</script>
+</body>
+</html>
