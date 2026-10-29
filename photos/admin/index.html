@@ -140,12 +140,24 @@
     return;
   }
 
+  // Busy-server (5xx/429) and dropped-connection errors are retried with backoff.
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   async function api(action, extra) {
-    const res = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(Object.assign({ e: EVENT, owner: OWNER, action }, extra || {})) });
-    let d = null; try { d = await res.json(); } catch (e) { /* not json */ }
-    if (!res.ok || !d || !d.ok) throw new Error((d && d.error) || ('HTTP ' + res.status));
-    return d;
+    let last = null;
+    for (let a = 0; a < 4; a++) {
+      if (a) await sleep(600 * Math.pow(2, a - 1) + Math.random() * 300);
+      let res;
+      try {
+        res = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.assign({ e: EVENT, owner: OWNER, action }, extra || {})) });
+      } catch (e) { last = new Error('network'); continue; }
+      let d = null; try { d = await res.json(); } catch (e) { /* not json */ }
+      if (res.ok && d && d.ok) return d;
+      const err = new Error((d && d.error) || ('HTTP ' + res.status));
+      if (res.status >= 500 || res.status === 429) { last = err; continue; }
+      throw err;
+    }
+    throw last || new Error('network');
   }
 
   const mb = (n) => (n / 1048576).toFixed(n > 1048576 * 100 ? 0 : 1) + ' MB';
