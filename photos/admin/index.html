@@ -13,7 +13,9 @@
 <style>
   :root { --cream: #f6f3ea; --paper: #fbf9f3; --ink: #1d2433; --muted: rgba(29,36,51,0.72); --terracotta: #b05f36; --forest: #26493a; --line: rgba(29,36,51,0.14); }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html, body { margin: 0; background: var(--cream); color: var(--ink); font-family: 'Archivo', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: var(--forest); }
   header { border-bottom: 1px solid var(--line); }
   .bar { max-width: 1280px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
   .logo { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; letter-spacing: 0.04em; color: var(--ink); text-decoration: none; }
@@ -22,23 +24,35 @@
   main { max-width: 1280px; margin: 0 auto; padding: 32px 24px 80px; }
   h1 { margin: 0; font-family: 'Pinyon Script', serif; font-weight: 400; font-size: clamp(40px, 7vw, 56px); line-height: 1.1; }
   .eyebrow { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--terracotta); }
-  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 20px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 16px; }
   .stat { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; min-width: 120px; }
   .stat b { display: block; font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; line-height: 1.1; }
   .stat span { font-size: 12px; color: var(--muted); letter-spacing: 0.04em; }
+
+  .albumbox { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 0 0 18px; padding: 14px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; }
+  .albumbox .state { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+  .albumbox .dot { width: 10px; height: 10px; border-radius: 50%; background: #b9b3a6; }
+  .albumbox.on .dot { background: #2e8b57; }
+  .albumbox .hint { flex: 1 1 280px; font-size: 14px; color: var(--muted); }
+
   .tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 16px; }
   select, .tbtn { font: 500 15px 'Archivo', system-ui, sans-serif; color: var(--ink); background: #fff; border: 1px solid rgba(29,36,51,0.25); border-radius: 6px; padding: 9px 12px; min-height: 42px; }
-  .tbtn { cursor: pointer; }
+  .tbtn { cursor: pointer; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
   .tbtn:hover { border-color: var(--forest); }
-  label.check { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; }
+  .tbtn.go { background: var(--forest); border-color: var(--forest); color: var(--cream); }
+  .tbtn.armed { background: #2e8b57; border-color: #2e8b57; color: #fff; }
+  .tbtn:disabled { opacity: 0.6; cursor: default; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
   .tile { position: relative; margin: 0; aspect-ratio: 1 / 1; border: 0; padding: 0; border-radius: 6px; overflow: hidden; background: #e9e3d3; cursor: pointer; }
   .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .tile .ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 10px; font-size: 12px; color: var(--muted); word-break: break-all; text-align: center; }
   .tile .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 8px 6px; font-size: 12px; font-weight: 500; color: #fff; text-align: left; background: linear-gradient(transparent, rgba(0,0,0,0.55)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .tile.is-hidden img { opacity: 0.35; }
-  .tile .tag { position: absolute; top: 6px; left: 6px; padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; background: var(--terracotta); color: #fff; display: none; }
-  .tile.is-hidden .tag { display: block; }
+  .tile.is-hidden img, .tile.is-outtake img { opacity: 0.35; }
+  .tags { position: absolute; top: 6px; left: 6px; display: flex; flex-wrap: wrap; gap: 4px; }
+  .tags span { padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; color: #fff; }
+  .tags .t-album { background: #2e8b57; }
+  .tags .t-hidden { background: var(--terracotta); }
+  .tags .t-out { background: #6b6f78; }
   .tile:focus-visible { outline: 3px solid rgba(176,95,54,0.5); outline-offset: 2px; }
   .more { display: flex; justify-content: center; margin-top: 20px; }
   .msg { margin: 60px auto; max-width: 520px; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 22px; }
@@ -56,9 +70,12 @@
   .lb-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
   .abtn { display: flex; align-items: center; justify-content: center; min-height: 44px; border-radius: 6px; font: 600 15px 'Archivo', system-ui, sans-serif; text-decoration: none; cursor: pointer; border: 1px solid rgba(29,36,51,0.25); background: #fff; color: var(--ink); }
   .abtn.primary { background: var(--forest); border-color: var(--forest); color: var(--cream); }
+  .abtn.album { border-color: #2e8b57; color: #1f6b41; }
+  .abtn.album.in { background: #2e8b57; color: #fff; }
   .abtn.danger { color: #9b2c1f; border-color: rgba(155,44,31,0.45); }
   .abtn.danger.armed { background: #9b2c1f; border-color: #9b2c1f; color: #fff; }
   .abtn:disabled { opacity: 0.6; cursor: default; }
+  .keys { font-size: 12px; color: var(--muted); }
   .vids { margin-top: 36px; }
   .vid-list { list-style: none; margin: 10px 0 0; padding: 0; border-top: 1px solid var(--line); }
   .vid-list li { display: flex; flex-wrap: wrap; gap: 4px 16px; padding: 10px 2px; border-bottom: 1px solid var(--line); font-size: 15px; }
@@ -68,6 +85,7 @@
   .nav.prev { left: 10px; } .nav.next { right: 10px; }
   .close { position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: rgba(251,249,243,0.9); font-size: 20px; cursor: pointer; }
   .note { font-size: 13px; color: var(--muted); }
+  .linkbtn { border: 0; background: none; padding: 0; color: var(--forest); font: inherit; text-decoration: underline; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -81,16 +99,30 @@
   <div class="eyebrow">Guest photos</div>
   <h1>Lisa &amp; Pete</h1>
   <div class="stats" id="stats"></div>
+
+  <div class="albumbox" id="albumbox">
+    <span class="state"><span class="dot" aria-hidden="true"></span><span id="albumState">Public album: off</span></span>
+    <span class="hint" id="albumHint"></span>
+    <button class="tbtn" id="albumToggle" type="button">Turn on</button>
+    <a class="tbtn" id="albumOpen" href="/photos/album/" target="_blank" rel="noopener">Open album</a>
+  </div>
+
   <div class="tools">
-    <label class="visually-hidden" for="who" style="position:absolute;left:-9999px">Guest</label>
+    <select id="filter" aria-label="Which photos">
+      <option value="all">All photos</option>
+      <option value="unapproved">Not in the album yet</option>
+      <option value="approved">In the album</option>
+      <option value="hidden">Hidden</option>
+      <option value="outtakes">Removed by guests</option>
+    </select>
     <select id="who" aria-label="Show photos from"><option value="">Everyone</option></select>
-    <label class="check"><input type="checkbox" id="showHidden" checked> Show hidden</label>
     <button class="tbtn" id="refresh" type="button">Refresh</button>
+    <button class="tbtn" id="bulk" type="button" hidden>Add all shown to album</button>
   </div>
   <div class="grid" id="grid"></div>
-  <p class="empty" id="empty" hidden>No photos yet.</p>
+  <p class="empty" id="empty" hidden>No photos here.</p>
   <div class="more"><button class="tbtn" id="more" type="button" hidden>Load more</button></div>
-  <p class="note">Photo links on this page expire after two hours; Refresh renews them. Hide keeps a photo out of anything we publish later and can be undone. Delete removes it for good.</p>
+  <p class="note">Only photos you add to the album are public, and only while the album is on. Hide keeps a photo out of the album and can be undone; Delete removes it for good. Photos a guest removes stay under "Removed by guests". Photo links on this page expire after two hours; Refresh renews them. <button class="linkbtn" id="forget" type="button">Forget this device</button></p>
   <section id="vids" class="vids" hidden>
     <div class="eyebrow">Guests with videos</div>
     <p class="note">They tapped "Have a video?" on the photo page and left a way to reach them. Send them a video link after the wedding.</p>
@@ -104,18 +136,21 @@
       <img id="lbImg" alt="">
       <button class="nav prev" id="prev" type="button" aria-label="Previous photo">‹</button>
       <button class="nav next" id="next" type="button" aria-label="Next photo">›</button>
-      <button class="close" id="close" type="button" aria-label="Close">×</button>
+      <button class="close" id="close" type="button" aria-label="Close" autofocus>×</button>
     </div>
     <div class="lb-side">
       <h2 id="lbWho"></h2>
       <p id="lbWhen"></p>
       <p id="lbName"></p>
       <p id="lbHeic" class="note" hidden>This is an iPhone HEIC file; your browser shows a preview. Download it for full quality.</p>
+      <p id="lbOut" class="note" hidden>The guest removed this photo. It stays here, out of the album.</p>
       <div class="lb-actions">
+        <button class="abtn album" id="lbAlbum" type="button">Add to album</button>
         <a class="abtn primary" id="lbDownload" href="#" download>Download original</a>
         <button class="abtn" id="lbHide" type="button">Hide</button>
         <button class="abtn danger" id="lbDelete" type="button">Delete</button>
       </div>
+      <p class="keys">Keys: ← → next photo · A album · H hide</p>
     </div>
   </div>
 </dialog>
@@ -125,23 +160,41 @@
   'use strict';
   const API = 'https://hseupjbneifqxaykxltt.supabase.co/functions/v1/api';
   const DEFAULT_EVENT = 'bf4d479a7b1c16d5b088ede0';
-  const h = new URLSearchParams(location.hash.replace(/^#/, ''));
+  const $ = (id) => document.getElementById(id);
   // Links get pasted into texts and emails: take the key itself and ignore anything an app
   // tacks on (a trailing period, a closing bracket, uppercase from autocorrect).
   const hex = (v) => ((v || '').match(/[a-f0-9]{16,64}/i) || [''])[0].toLowerCase();
-  const OWNER = hex(h.get('k'));
-  const EVENT = hex(h.get('e')) || DEFAULT_EVENT;
-  const $ = (id) => document.getElementById(id);
-  const PAGE = 300;
-  let items = [], total = 0, offset = 0, view = [], current = -1;
+  const hash = new URLSearchParams(location.hash.replace(/^#/, ''));
+  const query = new URLSearchParams(location.search);
+  const EVENT = hex(hash.get('e') || query.get('e')) || DEFAULT_EVENT;
+  const KEY_STORE = 'lp-admin-owner-' + EVENT.slice(0, 8);
+  const store = {
+    get() { try { return localStorage.getItem(KEY_STORE); } catch (e) { return null; } },
+    set(v) { try { localStorage.setItem(KEY_STORE, v); } catch (e) { /* private mode */ } },
+    clear() { try { localStorage.removeItem(KEY_STORE); } catch (e) { /* private mode */ } },
+  };
+  // The key can come from #k=… (preferred: never sent to the server), ?owner=… or ?k=…, or
+  // from an earlier visit on this device. A key in the address is saved, then wiped from it.
+  const fromUrl = hex(hash.get('k')) || hex(query.get('owner')) || hex(query.get('k'));
+  const OWNER = fromUrl || hex(store.get());
+  if (fromUrl) {
+    store.set(fromUrl);
+    const keepE = EVENT !== DEFAULT_EVENT ? '?e=' + EVENT : '';
+    try { history.replaceState(null, '', location.pathname + keepE); } catch (e) { /* fine */ }
+  }
+  // Pasting a #k= link into a tab already on this page changes only the hash, which doesn't
+  // reload the page; reload so the new key is picked up.
+  window.addEventListener('hashchange', () => { if (/(^|[#&])(k|e)=/.test(location.hash)) location.reload(); });
+  if (EVENT !== DEFAULT_EVENT) $('albumOpen').href = '/photos/album/?e=' + EVENT;
 
   if (!/^[a-f0-9]{16,64}$/.test(OWNER)) {
     $('app').textContent = '';
     const p = document.createElement('p'); p.className = 'msg';
-    p.textContent = 'This page needs your private link. Open the admin link Pete saved for you.';
+    p.textContent = 'This page needs your private link. Open the admin link from the email Pete sent you.';
     $('app').appendChild(p);
     return;
   }
+  $('forget').addEventListener('click', () => { store.clear(); location.replace(location.pathname); });
 
   // Busy-server (5xx/429) and dropped-connection errors are retried with backoff.
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -163,10 +216,15 @@
     throw last || new Error('network');
   }
 
+  const PAGE = 300;
+  let items = [], total = 0, offset = 0, view = [], current = -1;
+  let albumPublic = false, approvedCount = 0;
+
   const mb = (n) => (n / 1048576).toFixed(n > 1048576 * 100 ? 0 : 1) + ' MB';
   const when = (iso) => { try { return new Date(iso).toLocaleString('en-US', { timeZone: 'America/New_York', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }); } catch (e) { return iso; } };
   const isHeic = (it) => /heic|heif/i.test(it.type || '') || /\.(heic|heif)$/i.test(it.name || '');
   const nameOf = (c) => (c && c !== '(no name)') ? c : 'Anonymous';
+  const plural = (n, one, many) => n + ' ' + (n === 1 ? one : many);
 
   function stat(label, value) {
     const d = document.createElement('div'); d.className = 'stat';
@@ -175,63 +233,87 @@
     d.append(b, s); return d;
   }
 
+  function showAlbum() {
+    $('albumbox').classList.toggle('on', albumPublic);
+    $('albumState').textContent = 'Public album: ' + (albumPublic ? 'on' : 'off');
+    $('albumHint').textContent = albumPublic
+      ? 'Anyone with the album link sees ' + plural(approvedCount, 'photo', 'photos') + '.'
+      : 'Guests see nothing yet. Add photos to the album, then turn it on. ' + plural(approvedCount, 'photo is', 'photos are') + ' ready.';
+    disarmAlbum();
+  }
+
   async function loadStatus() {
     const s = await api('status');
     const c = s.counts || {};
+    albumPublic = !!s.albumPublic;
+    approvedCount = Number(c.approved) || 0;
     const st = $('stats'); st.textContent = '';
-    st.append(stat('photos received', String(c.received || 0)),
-              stat('guests', String(Object.keys(s.contributors || {}).length)),
+    st.append(stat('photos received', String((c.received || 0) - (c.outtakes || 0))),
+              stat('in the album', String(approvedCount)),
+              stat('guests', String(Object.keys(s.contributors || {}).filter((k) => k !== '(no name)').length)),
               stat('stored', mb(c.totalBytes || 0)),
               stat('hidden', String(c.hidden || 0)));
+    if (c.outtakes) st.append(stat('removed by guests', String(c.outtakes)));
     if (c.pending) st.append(stat('still arriving', String(c.pending)));
+    showAlbum();
     const sel = $('who'), keep = sel.value;
     sel.textContent = '';
-    const all = document.createElement('option'); all.value = ''; all.textContent = 'Everyone (' + (c.received || 0) + ')'; sel.appendChild(all);
+    const all = document.createElement('option'); all.value = ''; all.textContent = 'Everyone'; sel.appendChild(all);
     Object.entries(s.contributors || {}).sort((a, b) => b[1] - a[1]).forEach(([name, n]) => {
       const o = document.createElement('option'); o.value = name; o.textContent = nameOf(name) + ' (' + n + ')'; sel.appendChild(o);
     });
     sel.value = keep;
+    if (sel.selectedIndex < 0) sel.value = ''; // that guest has no photos left
     const vids = s.videos || [];
     $('vids').hidden = vids.length === 0;
     const list = $('vidList'); list.textContent = '';
     for (const v of vids) {
       const li = document.createElement('li');
       const b = document.createElement('b'); b.textContent = nameOf(v.name);
-      const c = document.createElement('span'); c.textContent = v.contact;
+      const c2 = document.createElement('span'); c2.textContent = v.contact;
       const t = document.createElement('span'); t.textContent = when(v.at);
-      li.append(b, c, t); list.appendChild(li);
+      li.append(b, c2, t); list.appendChild(li);
     }
   }
 
   async function loadPage(reset) {
     if (reset) { items = []; offset = 0; }
-    const g = await api('gallery', { offset, limit: PAGE, includeHidden: true });
+    const g = await api('gallery', { offset, limit: PAGE, filter: $('filter').value, includeHidden: true });
     items = items.concat(g.items || []);
     total = g.total || items.length;
-    offset = items.length;
+    offset += Number(g.limit) || PAGE;
     $('more').hidden = !g.truncated;
     render();
   }
 
   function render() {
-    const who = $('who').value, showHidden = $('showHidden').checked;
-    view = items.filter((it) => (!who || (it.contributor || '(no name)') === who) && (showHidden || !it.hidden));
+    const who = $('who').value;
+    view = items.filter((it) => !who || (it.contributor || '(no name)') === who);
     const grid = $('grid'); grid.textContent = '';
     $('empty').hidden = view.length > 0;
     view.forEach((it, idx) => {
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'tile' + (it.hidden ? ' is-hidden' : '');
-      b.setAttribute('aria-label', 'Photo from ' + nameOf(it.contributor));
+      const b = document.createElement('button'); b.type = 'button';
+      b.className = 'tile' + (it.hidden ? ' is-hidden' : '') + (it.outtake ? ' is-outtake' : '');
+      b.setAttribute('aria-label', 'Photo from ' + nameOf(it.contributor) + (it.approved ? ', in the album' : ''));
       const src = it.thumbUrl || (!isHeic(it) ? it.url : null);
       if (src) { const img = document.createElement('img'); img.src = src; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async'; b.appendChild(img); }
       else { const ph = document.createElement('div'); ph.className = 'ph'; ph.textContent = it.name; b.appendChild(ph); }
-      const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = 'Hidden';
+      const tags = document.createElement('div'); tags.className = 'tags';
+      const tag = (cls, text) => { const s = document.createElement('span'); s.className = cls; s.textContent = text; tags.appendChild(s); };
+      if (it.approved && !it.hidden && !it.outtake) tag('t-album', 'In album');
+      if (it.hidden) tag('t-hidden', 'Hidden');
+      if (it.outtake) tag('t-out', 'Removed by guest');
       const cap = document.createElement('span'); cap.className = 'cap'; cap.textContent = nameOf(it.contributor);
-      b.append(tag, cap);
+      b.append(tags, cap);
       b.addEventListener('click', () => open(idx));
       grid.appendChild(b);
     });
+    const addable = view.filter((it) => !it.approved && !it.hidden && !it.outtake).length;
+    $('bulk').hidden = addable === 0;
+    disarmBulk(addable);
   }
 
+  // ---------- viewer ----------
   function open(idx) {
     current = idx;
     const it = view[idx]; if (!it) return;
@@ -243,25 +325,55 @@
     $('lbWhen').textContent = when(it.at) + ' · ' + mb(it.bytes || 0);
     $('lbName').textContent = it.name;
     $('lbHeic').hidden = !isHeic(it);
+    $('lbOut').hidden = !it.outtake;
     $('lbDownload').href = it.downloadUrl || it.url;
     $('lbHide').textContent = it.hidden ? 'Unhide' : 'Hide';
+    $('lbHide').hidden = !!it.outtake;
+    const ab = $('lbAlbum');
+    ab.hidden = !!it.outtake;
+    ab.disabled = !!it.hidden;
+    ab.classList.toggle('in', !!it.approved);
+    ab.textContent = it.hidden ? 'Hidden photos stay out of the album' : (it.approved ? '✓ In the album — remove' : 'Add to album');
     if (!$('lb').open) $('lb').showModal();
   }
   function step(d) { if (view.length) open((current + d + view.length) % view.length); }
 
+  let busy = false; // one album/hide change at a time
+  async function toggleAlbum() {
+    const it = view[current]; if (busy || !it || it.hidden || it.outtake) return;
+    const want = !it.approved;
+    busy = true; $('lbAlbum').disabled = true;
+    try {
+      await api('approve', { uploadIds: [it.uploadId], approved: want });
+      it.approved = want;
+      approvedCount = Math.max(0, approvedCount + (want ? 1 : -1));
+      render(); open(current); showAlbum();
+    } catch (e) { alertMsg('Could not update the album. Try again.'); }
+    finally { busy = false; $('lbAlbum').disabled = !!(view[current] && view[current].hidden); }
+  }
+  async function toggleHide() {
+    const it = view[current]; if (busy || !it || it.outtake) return;
+    const want = !it.hidden;
+    busy = true; $('lbHide').disabled = true;
+    try { await api('hide', { uploadId: it.uploadId, hidden: want }); it.hidden = want; render(); open(current); loadStatus().catch(() => {}); }
+    catch (e) { alertMsg('Could not update that photo. Try again.'); }
+    finally { busy = false; $('lbHide').disabled = false; }
+  }
+  $('lbAlbum').addEventListener('click', toggleAlbum);
+  $('lbHide').addEventListener('click', toggleHide);
   $('prev').addEventListener('click', () => step(-1));
   $('next').addEventListener('click', () => step(1));
   $('close').addEventListener('click', () => $('lb').close());
-  $('lb').addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') step(-1); if (e.key === 'ArrowRight') step(1); });
-  $('lb').addEventListener('click', (e) => { if (e.target === $('lb')) $('lb').close(); });
-  $('lbHide').addEventListener('click', async () => {
-    const it = view[current]; if (!it) return;
-    const want = !it.hidden;
-    $('lbHide').disabled = true;
-    try { await api('hide', { uploadId: it.uploadId, hidden: want }); it.hidden = want; $('lbHide').textContent = want ? 'Unhide' : 'Hide'; render(); loadStatus().catch(() => {}); }
-    catch (e) { alertMsg('Could not update that photo. Try again.'); }
-    finally { $('lbHide').disabled = false; }
+  // Keys work wherever focus is (a button that was just disabled drops focus to the page).
+  document.addEventListener('keydown', (e) => {
+    if (!$('lb').open || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
+    else if (e.key === 'a' || e.key === 'A') toggleAlbum();
+    else if (e.key === 'h' || e.key === 'H') toggleHide();
   });
+  $('lb').addEventListener('click', (e) => { if (e.target === $('lb')) $('lb').close(); });
+
   // Delete: first click arms ("Delete for good?"), second click within 5 s deletes.
   let armTimer = null;
   function disarm() { clearTimeout(armTimer); const b = $('lbDelete'); b.classList.remove('armed'); b.textContent = 'Delete'; b.disabled = false; }
@@ -286,17 +398,76 @@
   });
   $('lb').addEventListener('close', disarm);
 
+  // ---------- album on/off (turning it on takes a second click) ----------
+  let albumArm = null;
+  function disarmAlbum() {
+    clearTimeout(albumArm);
+    const b = $('albumToggle');
+    b.classList.remove('armed'); b.disabled = false;
+    b.textContent = albumPublic ? 'Turn off' : 'Turn on';
+  }
+  $('albumToggle').addEventListener('click', async () => {
+    const b = $('albumToggle');
+    if (!albumPublic && !b.classList.contains('armed')) {
+      b.classList.add('armed');
+      b.textContent = 'Show ' + plural(approvedCount, 'photo', 'photos') + ' to guests?';
+      albumArm = setTimeout(disarmAlbum, 6000);
+      return;
+    }
+    clearTimeout(albumArm);
+    b.disabled = true;
+    try {
+      const d = await api('album_visibility', { public: !albumPublic });
+      albumPublic = !!d.albumPublic;
+      showAlbum();
+    } catch (e) { alertMsg('Could not change the album. Try again.'); disarmAlbum(); }
+  });
+
+  // ---------- add everything shown to the album (second click confirms) ----------
+  let bulkArm = null;
+  function disarmBulk(n) {
+    clearTimeout(bulkArm);
+    const b = $('bulk');
+    b.classList.remove('armed'); b.disabled = false;
+    b.textContent = 'Add all ' + (n === undefined ? '' : n + ' ') + 'shown to album';
+  }
+  $('bulk').addEventListener('click', async () => {
+    const b = $('bulk');
+    const ids = view.filter((it) => !it.approved && !it.hidden && !it.outtake).map((it) => it.uploadId);
+    if (!ids.length) return;
+    if (!b.classList.contains('armed')) {
+      b.classList.add('armed'); b.textContent = 'Add ' + plural(ids.length, 'photo', 'photos') + '?';
+      bulkArm = setTimeout(() => disarmBulk(ids.length), 6000);
+      return;
+    }
+    clearTimeout(bulkArm);
+    b.disabled = true; b.textContent = 'Adding…';
+    try {
+      for (let i = 0; i < ids.length; i += 500) await api('approve', { uploadIds: ids.slice(i, i + 500), approved: true });
+    } catch (e) { alertMsg('Could not add them all. Refresh and try again.'); disarmBulk(); loadStatus().catch(() => {}); return; }
+    const set = new Set(ids);
+    for (const it of items) if (set.has(it.uploadId)) it.approved = true;
+    approvedCount += ids.length;
+    showAlbum();
+    // In "Not in the album yet", bring up the next batch; elsewhere show the new badges.
+    if ($('filter').value === 'unapproved') loadPage(true).catch(() => { render(); alertMsg('Added. Refresh to see the rest.'); });
+    else render();
+    loadStatus().catch(() => {});
+  });
+
   function alertMsg(t) { const n = document.createElement('p'); n.className = 'note'; n.textContent = t; $('stats').after(n); setTimeout(() => n.remove(), 4000); }
 
   $('who').addEventListener('change', render);
-  $('showHidden').addEventListener('change', render);
-  $('more').addEventListener('click', () => loadPage(false).catch((e) => alertMsg('Could not load more.')));
+  $('filter').addEventListener('change', () => loadPage(true).catch(() => alertMsg('Could not load those photos.')));
+  $('more').addEventListener('click', () => loadPage(false).catch(() => alertMsg('Could not load more.')));
   $('refresh').addEventListener('click', () => Promise.all([loadStatus(), loadPage(true)]).catch(() => alertMsg('Could not refresh.')));
 
   Promise.all([loadStatus(), loadPage(true)]).catch((e) => {
+    const badKey = /owner token|invalid link/i.test(String(e.message));
+    if (badKey) store.clear(); // a wrong key must not stick to this device
     $('app').textContent = '';
     const p = document.createElement('p'); p.className = 'msg';
-    p.textContent = /owner token/i.test(String(e.message)) ? 'That private link is not valid.' : 'Could not load the photos. Check your connection and refresh.';
+    p.textContent = badKey ? 'That private link is not valid. Open the admin link from the email Pete sent you.' : 'Could not load the photos. Check your connection and refresh.';
     $('app').appendChild(p);
   });
 })();
