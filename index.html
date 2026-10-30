@@ -346,7 +346,7 @@
     <main data-screen-label="RSVP" style="animation: fadeUp 0.4s ease; max-width: 640px; margin: 0 auto; padding: 64px 24px 96px; width: 100%; box-sizing: border-box; text-align: center;">
       <div style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #b05f36; margin-bottom: 12px;">Join Us</div>
       <h2 style="margin: 0 0 16px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(36px, 5vw, 52px); color: #1d2433;">RSVP</h2>
-      <p style="margin: 0 0 28px; font-size: 16px; line-height: 1.65; color: #454c5c;">Kindly reply by <strong style="color: #1d2433;">{{ rsvpDeadline }}.</strong></p><strong style="color: #1d2433;">
+      <strong style="color: #1d2433;">
 <a href="{{ rsvpLink }}" target="_blank" rel="noopener" style="display: inline-block; background: #b05f36; color: #f6f3ea; border-radius: 4px; padding: 16px 48px; font-family: 'Archivo', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;" style-hover="background: #9a4f2a; color: #f6f3ea;">RSVP Form</a>
       <div style="margin-top: 16px; font-size: 14px; color: #5a6070;">Or email us at <a href="mailto:sternfishmanwedding@gmail.com">sternfishmanwedding@gmail.com</a></div>
 
@@ -410,7 +410,6 @@ class Component extends DCLogic {
   // Central editable TBD values
   tbd = {
     rsvpLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSterOJLMAK1DXxUGGcYiur8J7qIDogHkEm1qsG8IbU7YqWQ/viewform',
-    rsvpDeadline: 'September 1, 2026',
     roomBlockLink: 'https://www.worldhotels.com/content/luxury-hotels/en_US/book/hotel-rooms.33174.html?groupId=6B9DI4B9',
     courtyardLink: 'https://app.marriott.com/resview2?id=1784745965545&key=GRP&app=resvlink',
     roomBlockCutoff: 'October 6, 2026',
@@ -501,7 +500,7 @@ class Component extends DCLogic {
       goHome: set('home'), goRsvp: set('rsvp'), goDetails: set('details'),
       homePhotos, storyItems, venueTiles, schedule, detailNotes,
       copyAddress, copyLabel: this.state.copied ? 'Copied!' : 'Copy address',
-      rsvpLink: this.tbd.rsvpLink, rsvpDeadline: this.tbd.rsvpDeadline,
+      rsvpLink: this.tbd.rsvpLink,
       roomBlockLink: this.tbd.roomBlockLink, roomBlockCutoff: this.tbd.roomBlockCutoff,
       mapLink: this.tbd.mapLink, parkingNote: this.tbd.parking, courtyardLink: this.tbd.courtyardLink
     };
