@@ -126,8 +126,11 @@
   const API = 'https://hseupjbneifqxaykxltt.supabase.co/functions/v1/api';
   const DEFAULT_EVENT = 'bf4d479a7b1c16d5b088ede0';
   const h = new URLSearchParams(location.hash.replace(/^#/, ''));
-  const OWNER = h.get('k') || '';
-  const EVENT = /^[a-f0-9]{16,64}$/.test(h.get('e') || '') ? h.get('e') : DEFAULT_EVENT;
+  // Links get pasted into texts and emails: take the key itself and ignore anything an app
+  // tacks on (a trailing period, a closing bracket, uppercase from autocorrect).
+  const hex = (v) => ((v || '').match(/[a-f0-9]{16,64}/i) || [''])[0].toLowerCase();
+  const OWNER = hex(h.get('k'));
+  const EVENT = hex(h.get('e')) || DEFAULT_EVENT;
   const $ = (id) => document.getElementById(id);
   const PAGE = 300;
   let items = [], total = 0, offset = 0, view = [], current = -1;
