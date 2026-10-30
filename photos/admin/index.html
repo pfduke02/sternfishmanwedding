@@ -166,7 +166,7 @@
   const mb = (n) => (n / 1048576).toFixed(n > 1048576 * 100 ? 0 : 1) + ' MB';
   const when = (iso) => { try { return new Date(iso).toLocaleString('en-US', { timeZone: 'America/New_York', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }); } catch (e) { return iso; } };
   const isHeic = (it) => /heic|heif/i.test(it.type || '') || /\.(heic|heif)$/i.test(it.name || '');
-  const who = (c) => (c && c !== '(no name)') ? c : 'Anonymous';
+  const nameOf = (c) => (c && c !== '(no name)') ? c : 'Anonymous';
 
   function stat(label, value) {
     const d = document.createElement('div'); d.className = 'stat';
@@ -188,7 +188,7 @@
     sel.textContent = '';
     const all = document.createElement('option'); all.value = ''; all.textContent = 'Everyone (' + (c.received || 0) + ')'; sel.appendChild(all);
     Object.entries(s.contributors || {}).sort((a, b) => b[1] - a[1]).forEach(([name, n]) => {
-      const o = document.createElement('option'); o.value = name; o.textContent = who(name) + ' (' + n + ')'; sel.appendChild(o);
+      const o = document.createElement('option'); o.value = name; o.textContent = nameOf(name) + ' (' + n + ')'; sel.appendChild(o);
     });
     sel.value = keep;
     const vids = s.videos || [];
@@ -196,7 +196,7 @@
     const list = $('vidList'); list.textContent = '';
     for (const v of vids) {
       const li = document.createElement('li');
-      const b = document.createElement('b'); b.textContent = who(v.name);
+      const b = document.createElement('b'); b.textContent = nameOf(v.name);
       const c = document.createElement('span'); c.textContent = v.contact;
       const t = document.createElement('span'); t.textContent = when(v.at);
       li.append(b, c, t); list.appendChild(li);
@@ -220,12 +220,12 @@
     $('empty').hidden = view.length > 0;
     view.forEach((it, idx) => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'tile' + (it.hidden ? ' is-hidden' : '');
-      b.setAttribute('aria-label', 'Photo from ' + who(it.contributor));
+      b.setAttribute('aria-label', 'Photo from ' + nameOf(it.contributor));
       const src = it.thumbUrl || (!isHeic(it) ? it.url : null);
       if (src) { const img = document.createElement('img'); img.src = src; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async'; b.appendChild(img); }
       else { const ph = document.createElement('div'); ph.className = 'ph'; ph.textContent = it.name; b.appendChild(ph); }
       const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = 'Hidden';
-      const cap = document.createElement('span'); cap.className = 'cap'; cap.textContent = who(it.contributor);
+      const cap = document.createElement('span'); cap.className = 'cap'; cap.textContent = nameOf(it.contributor);
       b.append(tag, cap);
       b.addEventListener('click', () => open(idx));
       grid.appendChild(b);
@@ -237,8 +237,8 @@
     const it = view[idx]; if (!it) return;
     const img = $('lbImg');
     img.src = isHeic(it) ? (it.thumbUrl || '') : it.url;
-    img.alt = 'Photo from ' + who(it.contributor);
-    $('lbWho').textContent = who(it.contributor);
+    img.alt = 'Photo from ' + nameOf(it.contributor);
+    $('lbWho').textContent = nameOf(it.contributor);
     disarm();
     $('lbWhen').textContent = when(it.at) + ' · ' + mb(it.bytes || 0);
     $('lbName').textContent = it.name;
