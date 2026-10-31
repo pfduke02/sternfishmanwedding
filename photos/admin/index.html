@@ -354,6 +354,7 @@
       it.approved = want;
       approvedCount = Math.max(0, approvedCount + (want ? 1 : -1));
       render(); open(current); showAlbum();
+      loadStatus().catch(() => {}); // keep the "in the album" count in step
     } catch (e) { alertMsg('Could not update the album. Try again.'); }
     finally { busy = false; $('lbAlbum').disabled = !!(view[current] && view[current].hidden); }
   }
