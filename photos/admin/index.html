@@ -276,12 +276,18 @@
     }
   }
 
+  // Only the newest request draws the grid: switching filters quickly (arrow keys on the
+  // dropdown fire a change per step) must not mix two answers or show an older one.
+  let loadSeq = 0;
   async function loadPage(reset) {
-    if (reset) { items = []; offset = 0; }
-    const g = await api('gallery', { offset, limit: PAGE, filter: $('filter').value, includeHidden: true });
-    items = items.concat(g.items || []);
+    const seq = ++loadSeq;
+    const from = reset ? 0 : offset;
+    if (reset) $('more').hidden = true;
+    const g = await api('gallery', { offset: from, limit: PAGE, filter: $('filter').value, includeHidden: true });
+    if (seq !== loadSeq) return;
+    items = (reset ? [] : items).concat(g.items || []);
     total = g.total || items.length;
-    offset += Number(g.limit) || PAGE;
+    offset = from + (Number(g.limit) || PAGE);
     $('more').hidden = !g.truncated;
     render();
   }

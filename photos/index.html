@@ -406,7 +406,7 @@
     const counted = items.filter((i) => !i.fatal && i.state !== 'dup' && i.state !== 'removed');
     const total = counted.length;
     const ok = items.filter((i) => i.state === 'done').length;
-    const bad = items.filter((i) => i.state === 'failed').length;
+    const bad = items.filter((i) => i.state === 'failed' && !i.fatal).length; // videos/too large: the tile explains, no retry
     const dups = items.filter((i) => i.state === 'dup').length;
     const working = items.some(busy);
     const dupNote = dups ? ' · ' + dups + ' already shared' : '';
